@@ -59,7 +59,7 @@ If you want to run it from docker you don't have to follow the next steps. All y
 docker compose up --build
 ```
 
-You can also interact with expo dev server in your IDE with `docker compose attach expo`.
+You can also interact with expo dev server in your IDE with `docker compose attach <CONTAINER_NAME>`.
 
 ### 1. Run server
 
@@ -77,7 +77,7 @@ This will start the Expo Dev Server. Open the app in:
 
 You can also scan the QR code using the [Expo Go](https://expo.dev/go) app on your device. This project fully supports running in Expo Go for quick testing on physical devices.
 
-> ⚠️ Make sure to have ngrok for the `--tunel` flag otherwise you can install it by the following command : `npm install -g @expo/ngrok@^4.1.0`.
+> ⚠️ Make sure to have ngrok for the `--tunnel` flag otherwise you can install it by the following command : `npm install -g @expo/ngrok@^4.1.0`.
 
 ### 2. Copy the .env config
 
