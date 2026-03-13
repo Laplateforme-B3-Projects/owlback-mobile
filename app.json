@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "my-app",
-    "slug": "my-app",
+    "name": "owlback-mobile",
+    "slug": "owlback-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "my-app",
+    "scheme": "owlback-mobile",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {

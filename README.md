@@ -1,28 +1,72 @@
-# owlback-mobile
-Application mobile pour le service Owlback
+# 🦉 Owlback
 
-# Minimal Template
+**Owlback** est un projet développé dans le cadre de l'obtention du titre RNCP **Concepteur Développeur d'Applications** à l'école [LaPlateforme\_](https://laplateforme.io).
 
-This is a [React Native](https://reactnative.dev/) project built with [Expo](https://expo.dev/) and [React Native Reusables](https://reactnativereusables.com).
+Owlback est une application mobile pensée pour simplifier le suivi de vos **factures** et **notes de frais** au quotidien. Elle s'adresse particulièrement aux personnes souhaitant automatiser et fluidifier leur gestion administrative — de l'archivage des documents jusqu'à la transmission à leur comptable.
+
+L'intelligence artificielle, bien que discrète dans l'interface, joue un rôle clé dans l'automatisation des traitements et l'amélioration de votre productivité.
+
+---
+
+> Ce repository couvre l'**application mobile** uniquement.
+
+---
+
+### Auteurs
+
+- 👦🏾ZANAGLIA Michael & 👦 GASS Mathéo
+
+## 🚀 Features
+
+- ⚛️ **React Native** with TypeScript, Zod, useQuery, Formik...
+- 🎨 **React Native Reusables** powered by [Nativewind](https://www.nativewind.dev/)
+
+## 📋 Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- **Node.js 18+**
+
+## 🛠️ Tech Stack
+
+- React Native 0.81+
+- Expo
+- React 19+
+- TypeScript
+- Nativewind
+- React Native Reusables
+- Zod (Schema validation)
+- useQuery
+- ShadCN UI components
+
+# 🚀 Installation
+
+This is a React Native project built with [Expo](https://expo.dev/) and [React Native Reusables](https://reactnativereusables.com).
 
 It was initialized using the following command:
 
 ```bash
-npx @react-native-reusables/cli@latest init -t my-app
+npx @react-native-reusables/cli@latest init -t owlback-mobile
 ```
 
 ## Getting Started
 
+### 0. 🐋 Docker
+
+If you want to run it from docker you don't have to follow the next steps. All you have to do is :
+
+```bash
+docker compose up --build
+```
+
+You can also interact with expo dev server in your IDE with `docker compose attach expo`.
+
+### 1. Run server
+
 To run the development server:
 
 ```bash
-    npm run dev
-    # or
-    yarn dev
-    # or
-    pnpm dev
-    # or
-    bun dev
+    npx expo run --tunnel -c
 ```
 
 This will start the Expo Dev Server. Open the app in:
@@ -33,7 +77,13 @@ This will start the Expo Dev Server. Open the app in:
 
 You can also scan the QR code using the [Expo Go](https://expo.dev/go) app on your device. This project fully supports running in Expo Go for quick testing on physical devices.
 
-## Adding components
+> ⚠️ Make sure to have ngrok for the `--tunel` flag otherwise you can install it by the following command : `npm install -g @expo/ngrok@^4.1.0`.
+
+### 2. Copy the .env config
+
+`cp .env.example .env`
+
+### 3. Adding components
 
 You can add more reusable components using the CLI:
 
@@ -45,14 +95,7 @@ npx react-native-reusables/cli@latest add [...components]
 
 If you don't specify any component names, you'll be prompted to select which components to add interactively. Use the `--all` flag to install all available components at once.
 
-## Project Features
-
-- ⚛️ Built with [Expo Router](https://expo.dev/router)
-- 🎨 Styled with [Tailwind CSS](https://tailwindcss.com/) via [Nativewind](https://www.nativewind.dev/)
-- 📦 UI powered by [React Native Reusables](https://github.com/founded-labs/react-native-reusables)
-- 🚀 New Architecture enabled
-- 🔥 Edge to Edge enabled
-- 📱 Runs on iOS, Android, and Web
+## Potential errors that may occur
 
 ## Learn More
 
