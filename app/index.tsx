@@ -1,77 +1,66 @@
-import { Button } from '@/components/ui/button';
-import { Icon } from '@/components/ui/icon';
+import { Container } from '@/components/custom/Container';
+import { CustomClassicButton } from '@/components/custom/CustomClassicButton';
 import { Text } from '@/components/ui/text';
-import { Link, Stack } from 'expo-router';
-import { MoonStarIcon, StarIcon, SunIcon } from 'lucide-react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Stack } from 'expo-router';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ArrowRightCircle } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
 import * as React from 'react';
-import { Image, type ImageStyle, View } from 'react-native';
-
-const LOGO = {
-  light: require('@/assets/images/react-native-reusables-light.png'),
-  dark: require('@/assets/images/react-native-reusables-dark.png'),
-};
+import { Image, ImageBackground, View } from 'react-native';
+import Constants from 'expo-constants';
+import { LOGO } from '@/utils/asset';
 
 const SCREEN_OPTIONS = {
-  title: 'React Native Reusables',
+  title: '',
   headerTransparent: true,
-  headerRight: () => <ThemeToggle />,
+  headerRight: () => null,
 };
 
-const IMAGE_STYLE: ImageStyle = {
-  height: 76,
-  width: 76,
-};
+const version = Constants.expoConfig?.extra?.appVersion;
 
 export default function Screen() {
   const { colorScheme } = useColorScheme();
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+
+  function handlePress() {
+    navigation.navigate('login');
+  }
 
   return (
-    <>
-      <Stack.Screen options={SCREEN_OPTIONS} />
-      <View className="flex-1 items-center justify-center gap-8 p-4">
-        <Image source={LOGO[colorScheme ?? 'light']} style={IMAGE_STYLE} resizeMode="contain" />
-        <View className="gap-2 p-4">
-          <Text className="ios:text-foreground font-mono text-sm text-muted-foreground">
-            1. Edit <Text variant="code">app/index.tsx</Text> to get started.
-          </Text>
-          <Text className="ios:text-foreground font-mono text-sm text-muted-foreground">
-            2. Save to see your changes instantly.
-          </Text>
+    <ImageBackground
+      source={require('@/assets/images/asset_lobby.png')}
+      style={{ flex: 1, height: 1000 }}
+      className="h-svh p-0"
+      resizeMode="cover">
+      <Container variant="main-vertical" className="bg-black/40">
+        <Stack.Screen options={SCREEN_OPTIONS} />
+        <View className="flex-1 items-center justify-center gap-8 p-4">
+          <Container variant="gradient" className="relative h-40 w-40 rounded-full">
+            <Image
+              source={LOGO[colorScheme ?? 'light']}
+              className="absolute left-1/2 top-1/3 h-36 w-36 -translate-x-1/2 -translate-y-1/3"
+              resizeMode="contain"
+            />
+          </Container>
+
+          <View className="flex w-full justify-center gap-2">
+            <Text variant={'h1'} className="text-6xl font-black text-app-secondary">
+              Owlback
+            </Text>
+
+            <Container className="px-20">
+              <CustomClassicButton
+                onPress={handlePress}
+                description="C'est parti !"
+                icon={ArrowRightCircle}
+              />
+            </Container>
+          </View>
         </View>
-        <View className="flex-row gap-2">
-          <Link href="https://reactnativereusables.com" asChild>
-            <Button>
-              <Text>Browse the Docs</Text>
-            </Button>
-          </Link>
-          <Link href="https://github.com/founded-labs/react-native-reusables" asChild>
-            <Button variant="ghost">
-              <Text>Star the Repo</Text>
-              <Icon as={StarIcon} />
-            </Button>
-          </Link>
-        </View>
-      </View>
-    </>
-  );
-}
 
-const THEME_ICONS = {
-  light: SunIcon,
-  dark: MoonStarIcon,
-};
-
-function ThemeToggle() {
-  const { colorScheme, toggleColorScheme } = useColorScheme();
-
-  return (
-    <Button
-      onPressIn={toggleColorScheme}
-      size="icon"
-      variant="ghost"
-      className="ios:size-9 rounded-full web:mx-4">
-      <Icon as={THEME_ICONS[colorScheme ?? 'light']} className="size-5" />
-    </Button>
+        <Text className="align-center">{version}</Text>
+      </Container>
+    </ImageBackground>
   );
 }

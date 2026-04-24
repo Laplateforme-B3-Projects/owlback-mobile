@@ -11,4 +11,4 @@ COPY . ./
 
 RUN npm install
 
-CMD ["npx", "expo", "--tunnel"]
+CMD ["npx", "expo", "start", "--tunnel", "-c"]

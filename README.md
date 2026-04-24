@@ -97,6 +97,12 @@ If you don't specify any component names, you'll be prompted to select which com
 
 ## Potential errors that may occur
 
+### Run docker
+
+##### • Expo dosn't start
+
+Since you use ngrok you might encounter issues when trying to start docker. **Each time** you will run your docker compose make sure to add the flag `--build`
+
 ## Learn More
 
 To dive deeper into the technologies used:

@@ -13,7 +13,8 @@ export {
 } from 'expo-router';
 
 export default function RootLayout() {
-  const { colorScheme } = useColorScheme();
+  const { colorScheme, setColorScheme } = useColorScheme();
+  setColorScheme('dark');
 
   return (
     <ThemeProvider value={NAV_THEME[colorScheme ?? 'light']}>
