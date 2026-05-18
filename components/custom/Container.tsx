@@ -26,7 +26,7 @@ export const Container = ({ children, variant = 'default', className = '' }: Con
       );
     case 'main-vertical':
       return (
-        <View className={`flex h-full w-full flex-col px-8 py-32 sm:px-32 ${className}`}>
+        <View className={`flex h-full w-full flex-col py-2 ${className}`}>
           {children}
         </View>
       );

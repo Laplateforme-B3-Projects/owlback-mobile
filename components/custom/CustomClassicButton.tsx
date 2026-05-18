@@ -13,7 +13,7 @@ export interface CustomButtonProps {
   icon?: LucideIcon;
   description?: string;
   className?: string;
-  isSubmit?: boolean;
+  isDisabled?: boolean;
 }
 
 export const CustomClassicButton = ({
@@ -21,20 +21,21 @@ export const CustomClassicButton = ({
   icon,
   description = '',
   className = '',
-  isSubmit = false,
+  isDisabled = false,
 }: CustomButtonProps) => {
   const os = Platform.OS;
 
   return os === 'ios' ? (
-    <IosButton onPress={onPress} icon={icon} description={description} className={className} />
+    <IosButton onPress={onPress} icon={icon} description={description} className={className} isDisabled={isDisabled} />
   ) : (
-    <AndroidButton onPress={onPress} icon={icon} description={description} className={className} />
+    <AndroidButton onPress={onPress} icon={icon} description={description} className={className} isDisabled={isDisabled}/>
   );
 };
 
-const IosButton = ({ onPress, icon, description, className }: CustomButtonProps) => {
+const IosButton = ({ onPress, icon, description, className, isDisabled }: CustomButtonProps) => {
   return (
     <Button
+      disabled={isDisabled}
       onPress={onPress}
       className={cn(
         'relative h-12 rounded-full bg-transparent',
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const AndroidButton = ({ onPress, icon, description }: CustomButtonProps) => {
+const AndroidButton = ({ onPress, icon, description, isDisabled }: CustomButtonProps) => {
   return (
     <AnimateElasticWrapper onAction={onPress}>
       <LinearGradient
@@ -74,6 +75,7 @@ const AndroidButton = ({ onPress, icon, description }: CustomButtonProps) => {
           padding: 1,
         }}>
         <Button
+          disabled={isDisabled}
           onPress={onPress}
           className={cn(
             'border-1 relative rounded-full bg-zinc-900 pb-2 blur-md dark:bg-[#516079]',
