@@ -4,6 +4,7 @@ export interface UserAuth {
     user?: User;
 }
 
+
 export interface User {
     id: number;
     firstname: string;
