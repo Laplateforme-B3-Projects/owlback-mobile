@@ -1,6 +1,5 @@
 import { Token } from '@/utils/type';
 import * as SecureStore from 'expo-secure-store';
-import { useCallback } from 'react';
 
 const useToken = () => {
   const saveToken = async (token: Token) => {

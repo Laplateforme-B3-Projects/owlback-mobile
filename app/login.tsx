@@ -1,17 +1,17 @@
 import React from 'react';
-import { loginSchema } from '@/app/Schemas/loginSchema';
-import { Image, TextInput } from 'react-native';
 import { Formik } from 'formik';
-import { Container } from '@/components/custom/Container';
-import { AppLayout } from '@/app/Layout/AppLayout';
-import { Text } from '@/components/ui/text';
-import { CustomClassicButton } from '@/components/custom/CustomClassicButton';
-import { LOGO } from '@/utils/asset';
-import { Separator } from '@/components/ui/separator';
 import { ArrowRightCircle } from 'lucide-react-native';
+import { Image, TextInput } from 'react-native';
+import { LOGO } from '@/utils/asset';
+import { AppLayout } from '@/app/Layout/AppLayout';
+import { loginSchema } from '@/app/Schemas/loginSchema';
+import { Container } from '@/components/custom/Container';
+import { CustomClassicButton } from '@/components/custom/CustomClassicButton';
 import { Checkbox } from '@/components/ui/checkbox';
-import { useAuth } from '@/hook/useAuth';
 import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
+import { Text } from '@/components/ui/text';
+import { useAuth } from '@/hook/useAuth';
 
 export default function LoginScreen() {
   const { login, errorAuth, isLoading } = useAuth();

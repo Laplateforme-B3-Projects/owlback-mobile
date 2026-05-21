@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import useUserStore from './store/useUserStore';
+import useUserStore from '@/hook/store/useUserStore';
 import { User } from '@/utils/type';
 import { isAxiosError } from 'axios';
 import axiosInstance from '@/utils/axios';

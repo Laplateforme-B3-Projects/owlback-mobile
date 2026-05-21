@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { Text } from '@/components/ui/text';
 import useUserStore from '@/hook/store/useUserStore';
-import { AppLayout } from './Layout/AppLayout';
+import { AppLayout } from '@/app/Layout/AppLayout';
 
 export default function LoginScreen() {
   const user = useUserStore((state) => state.user);

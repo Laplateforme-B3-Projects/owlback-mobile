@@ -1,19 +1,17 @@
+import React, { useEffect, useState } from 'react';
+import Constants from 'expo-constants';
+import { Stack } from 'expo-router';
+import { useColorScheme } from 'nativewind';
+import { ArrowRightCircle } from 'lucide-react-native';
+import { Image, ImageBackground, View } from 'react-native';
+import { LOGO } from '@/utils/asset';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 import { Container } from '@/components/custom/Container';
 import { CustomClassicButton } from '@/components/custom/CustomClassicButton';
 import { Text } from '@/components/ui/text';
-import { useNavigation } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ArrowRightCircle } from 'lucide-react-native';
-import { useColorScheme } from 'nativewind';
-import * as React from 'react';
-import { Image, ImageBackground, View } from 'react-native';
-import Constants from 'expo-constants';
-import { LOGO } from '@/utils/asset';
-import useToken from '@/hook/useToken';
-import useUserStore from '@/hook/store/useUserStore';
-import { useEffect, useState } from 'react';
 import { useUser } from '@/hook/useUser';
+import useToken from '@/hook/useToken';
 
 const SCREEN_OPTIONS = {
   title: '',
