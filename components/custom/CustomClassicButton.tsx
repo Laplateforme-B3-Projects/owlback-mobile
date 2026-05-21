@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { AnimateElasticWrapper } from '@/components/animate/AnimateElasticWrapper';
 import { LucideIcon } from 'lucide-react-native';
-import { Text, StyleSheet, Platform } from 'react-native';
+import { Text, StyleSheet, Platform, ActivityIndicator } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { GlassView } from 'expo-glass-effect';
 import { cn } from '@/lib/utils';
@@ -13,6 +13,7 @@ export interface CustomButtonProps {
   icon?: LucideIcon;
   description?: string;
   className?: string;
+  isLoading?: boolean;
   isDisabled?: boolean;
 }
 
@@ -21,18 +22,40 @@ export const CustomClassicButton = ({
   icon,
   description = '',
   className = '',
+  isLoading = false,
   isDisabled = false,
 }: CustomButtonProps) => {
   const os = Platform.OS;
 
   return os === 'ios' ? (
-    <IosButton onPress={onPress} icon={icon} description={description} className={className} isDisabled={isDisabled} />
+    <IosButton
+      onPress={onPress}
+      icon={icon}
+      description={description}
+      className={className}
+      isLoading={isLoading}
+      isDisabled={isDisabled}
+    />
   ) : (
-    <AndroidButton onPress={onPress} icon={icon} description={description} className={className} isDisabled={isDisabled}/>
+    <AndroidButton
+      onPress={onPress}
+      icon={icon}
+      description={description}
+      className={className}
+      isLoading={isLoading}
+      isDisabled={isDisabled}
+    />
   );
 };
 
-const IosButton = ({ onPress, icon, description, className, isDisabled }: CustomButtonProps) => {
+const IosButton = ({
+  onPress,
+  icon,
+  description,
+  className,
+  isLoading,
+  isDisabled,
+}: CustomButtonProps) => {
   return (
     <Button
       disabled={isDisabled}
@@ -44,7 +67,8 @@ const IosButton = ({ onPress, icon, description, className, isDisabled }: Custom
       )}>
       <GlassView glassEffectStyle="clear" style={styles.glassView} isInteractive />
       {description && <Text className="text-base text-white">{description}</Text>}
-      {icon && <Icon as={icon} size={24} />}
+      {icon && !isLoading && <Icon as={icon} size={24} />}
+      {isLoading && <ActivityIndicator color={'#f26619'} />}
     </Button>
   );
 };
@@ -60,7 +84,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const AndroidButton = ({ onPress, icon, description, isDisabled }: CustomButtonProps) => {
+const AndroidButton = ({
+  onPress,
+  icon,
+  description,
+  isLoading,
+  isDisabled,
+}: CustomButtonProps) => {
   return (
     <AnimateElasticWrapper onAction={onPress}>
       <LinearGradient
@@ -93,7 +123,8 @@ const AndroidButton = ({ onPress, icon, description, isDisabled }: CustomButtonP
             }}
           />
           {description && <Text className="text-white">{description}</Text>}
-          {icon && <Icon as={icon} size={24} />}
+          {icon && !isLoading && <Icon as={icon} size={24} />}
+          {isLoading && <ActivityIndicator color={'#f26619'} />}
         </Button>
       </LinearGradient>
     </AnimateElasticWrapper>

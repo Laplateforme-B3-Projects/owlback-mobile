@@ -10,6 +10,10 @@ import * as React from 'react';
 import { Image, ImageBackground, View } from 'react-native';
 import Constants from 'expo-constants';
 import { LOGO } from '@/utils/asset';
+import useToken from '@/hook/useToken';
+import useUserStore from '@/hook/store/useUserStore';
+import { useEffect, useState } from 'react';
+import { useUser } from '@/hook/useUser';
 
 const SCREEN_OPTIONS = {
   title: '',
@@ -20,12 +24,29 @@ const SCREEN_OPTIONS = {
 const version = Constants.expoConfig?.extra?.appVersion;
 
 export default function Screen() {
+  const [isUserConnected, setIsUserConnected] = useState(false);
   const { colorScheme } = useColorScheme();
+  const { getToken } = useToken();
+  const { getUser } = useUser();
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
-  function handlePress() {
+  async function handlePress() {
+    if (isUserConnected) {
+      const success = await getUser();
+      console.log(success ? 'success' : 'failed');
+      if (success) navigation.navigate('dashboard');
+      return;
+    }
     navigation.navigate('login');
   }
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = await getToken();
+      setIsUserConnected(!!token);
+    };
+    checkAuth();
+  }, [getToken]);
 
   return (
     <ImageBackground
@@ -52,7 +73,7 @@ export default function Screen() {
             <Container className="px-20">
               <CustomClassicButton
                 onPress={handlePress}
-                description="C'est parti !"
+                description={isUserConnected ? 'Tableau de bord' : "C'est parti !"}
                 icon={ArrowRightCircle}
               />
             </Container>
