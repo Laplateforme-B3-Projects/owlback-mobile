@@ -1,45 +1,46 @@
-{
-  "expo": {
-    "name": "owlback-mobile",
-    "slug": "owlback-mobile",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "owlback-mobile",
-    "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "splash": {
+export default {
+  expo: {
+    name: "owlback-mobile",
+    slug: "owlback-mobile",
+    version: "1.0.0",
+    orientation: "portrait",
+    icon: "./assets/images/icon.png",
+    scheme: "owlback-mobile",
+    userInterfaceStyle: "automatic",
+    newArchEnabled: true,
+    splash: {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
+    assetBundlePatterns: [
       "**/*"
     ],
-    "ios": {
+    ios: {
       "supportsTablet": true
     },
-    "android": {
+    android: {
       "edgeToEdgeEnabled": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
-    "web": {
+    web: {
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
-    "plugins": [
+    plugins: [
       "expo-router",
       "expo-secure-store"
     ],
-    "experiments": {
+    experiments: {
       "typedRoutes": true
     },
-    "extra": {
-      "appVersion": "1.0.0"
+    extra: {
+      appVersion: process.env.EXPO_PUBLIC_APP_VERSION,
+      expoUrl: process.env.EXPO_PUBLIC_URL,
     }
   }
-}
+};
