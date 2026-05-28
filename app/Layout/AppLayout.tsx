@@ -36,7 +36,7 @@ export const AppLayout = ({ children, showHeader = false }: AppLayoutProps) => {
           <Stack.Screen
             options={{ ...SCREEN_OPTIONS, headerShown: showHeader, gestureEnabled: showHeader }}
           />
-          <Container variant="vertical" className={'h-[100vh] items-center justify-center'}>
+          <Container variant="vertical" className={'min-h-[100vh] items-center justify-center'}>
             {children}
           </Container>
         </ScrollView>
