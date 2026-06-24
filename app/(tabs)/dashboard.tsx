@@ -10,24 +10,32 @@ import { cn } from '@/lib/utils';
 import { ReactNode } from 'react';
 import { MiniGraph } from '@/components/custom/MiniGraph';
 import { Separator } from '@/components/ui/separator';
+import { AnimateSlideWrapper } from '@/components/animate/AnimateSlideWrapper';
+import { styles } from '@/utils/styles';
 
-export default function LoginScreen() {
+export default function DashboardScreen() {
   const user = useUserStore((state) => state.user);
 
   return (
     <AppLayout>
       <Container
         variant="main-vertical"
-        className="h-auto items-center justify-start gap-5 px-4 py-16">
-        <CustomAvatar username={user?.fullname} />
+        className="h-auto items-center justify-start gap-5 px-4 py-20">
+        <AnimateSlideWrapper>
+          <CustomAvatar username={user?.fullname} />
+        </AnimateSlideWrapper>
 
         <Container variant="vertical">
-          <Text className="text-center text-5xl font-black">
-            Heureux de vous revoir {user?.firstname},
-          </Text>
-          <Text className="text-center text-2xl font-black text-[#C5C6C6]">
-            Voici un aperçu de votre activité.
-          </Text>
+          <AnimateSlideWrapper>
+            <Text className="text-center text-5xl font-black">
+              Heureux de vous revoir {user?.firstname},
+            </Text>
+          </AnimateSlideWrapper>
+          <AnimateSlideWrapper duration={1000}>
+            <Text className="text-center text-2xl font-black text-[#C5C6C6]">
+              Voici un aperçu de votre activité.
+            </Text>
+          </AnimateSlideWrapper>
         </Container>
 
         <CustomPressable className="mt-6 flex h-32 w-64 flex-col gap-0 overflow-hidden rounded-3xl border border-white/30">
@@ -60,17 +68,6 @@ export default function LoginScreen() {
     </AppLayout>
   );
 }
-
-const styles = StyleSheet.create({
-  glassView: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    borderRadius: 24,
-  },
-});
 
 interface CustomPressable {
   children: ReactNode;

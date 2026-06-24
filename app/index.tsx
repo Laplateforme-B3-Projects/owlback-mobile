@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Constants from 'expo-constants';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { useColorScheme } from 'nativewind';
 import { ArrowRightCircle } from 'lucide-react-native';
 import { Image, ImageBackground, View } from 'react-native';
 import { LOGO } from '@/utils/asset';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
 import { Container } from '@/components/custom/Container';
 import { CustomClassicButton } from '@/components/custom/CustomClassicButton';
 import { Text } from '@/components/ui/text';
@@ -26,16 +24,16 @@ export default function Screen() {
   const { colorScheme } = useColorScheme();
   const { getToken } = useToken();
   const { getUser } = useUser();
-  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+  const router = useRouter();
 
   async function handlePress() {
     if (isUserConnected) {
       const success = await getUser();
       console.log(success ? 'success' : 'failed');
-      if (success) navigation.navigate('dashboard');
+      if (success) router.replace('/dashboard');
       return;
     }
-    navigation.navigate('login');
+    router.push('/login');
   }
 
   useEffect(() => {

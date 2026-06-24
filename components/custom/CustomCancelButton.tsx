@@ -10,8 +10,7 @@ export const CustomCancelButton = ({ onPress, icon, description = '' }: CustomBu
     <AnimateElasticWrapper onAction={onPress} isInteractive={true}>
       <Button
         onPress={onPress}
-        variant={'destructive'}
-        className={cn('h-12 rounded-full', !description && 'w-12')}>
+        className={cn('h-12 rounded-full bg-app-secondary', !description && 'w-12')}>
         {icon && <Icon as={icon} size={24} />}
         {description && <Text className="text-base font-medium text-white">{description}</Text>}
       </Button>
