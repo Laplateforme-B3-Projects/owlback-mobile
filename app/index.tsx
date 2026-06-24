@@ -31,7 +31,7 @@ export default function Screen() {
   async function handlePress() {
     if (isUserConnected) {
       const success = await getUser();
-      console.log(success ? 'success' : 'failed');
+      console.log(success ? 'success' : 'failed'); //check failed case
       if (success) navigation.navigate('dashboard');
       return;
     }
