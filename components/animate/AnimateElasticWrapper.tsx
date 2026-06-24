@@ -72,7 +72,7 @@ export const AnimateElasticWrapper = ({
     // Lance l'animation avec un callback
     animationRef.current.start(({ finished }) => {
       if (finished) {
-        // ✅ Animation terminée sans interruption
+        // Animation terminée sans interruption
         isAnimating.current = false;
         animationRef.current = null;
       }

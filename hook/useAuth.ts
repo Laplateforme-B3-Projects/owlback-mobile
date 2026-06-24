@@ -3,8 +3,7 @@ import { useState } from 'react';
 import useToken from '@/hook/useToken';
 import useUserStore from '@/hook/store/useUserStore';
 import { UserAuth } from '@/utils/type';
-import { useNavigation } from 'expo-router';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useRouter } from 'expo-router';
 import axiosInstance from '@/utils/axios';
 
 interface LoginValues {
@@ -17,7 +16,7 @@ interface LoginValues {
 export const useAuth = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorAuth, setErrorAuth] = useState<string | null>(null);
-  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+  const router = useRouter();
   const updateUser = useUserStore((state) => state.updateUser);
   const { saveToken } = useToken();
 
@@ -30,13 +29,13 @@ export const useAuth = () => {
     try {
       const response = await axiosInstance.post<UserAuth>(`/login`, values);
       if (response.data.token) {
-        console.log(response.data.token);
+        console.log('login', response.data.token);
         await saveToken(response.data.token);
       }
       if (response.data.user) {
         updateUser(response.data.user);
       }
-      navigation.navigate('dashboard');
+      router.replace('/dashboard');
     } catch (error: any) {
       let message = 'Une erreur est survenue lors de la connexion.';
       if (axios.isAxiosError(error) && error.response) {

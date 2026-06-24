@@ -7,6 +7,7 @@ import { BlurView } from 'expo-blur';
 import { GlassView } from 'expo-glass-effect';
 import { cn } from '@/lib/utils';
 import { LinearGradient } from 'expo-linear-gradient';
+import { styles } from '@/utils/styles';
 
 export interface CustomButtonProps {
   onPress: () => void;
@@ -72,17 +73,6 @@ const IosButton = ({
     </Button>
   );
 };
-
-const styles = StyleSheet.create({
-  glassView: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    borderRadius: 50,
-  },
-});
 
 const AndroidButton = ({
   onPress,
