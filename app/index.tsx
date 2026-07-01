@@ -24,15 +24,19 @@ const version = Constants.expoConfig?.extra?.appVersion;
 export default function Screen() {
   const [isUserConnected, setIsUserConnected] = useState(false);
   const { colorScheme } = useColorScheme();
-  const { getToken } = useToken();
+  const { getToken,deleteToken } = useToken();
   const { getUser } = useUser();
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
   async function handlePress() {
+    console.log("isUserConnected",isUserConnected);
     if (isUserConnected) {
       const success = await getUser();
       console.log(success ? 'success' : 'failed');
-      if (success) navigation.navigate('dashboard');
+      if (!success){
+        deleteToken();
+        navigation.navigate('login');
+      }else navigation.navigate('dashboard');
       return;
     }
     navigation.navigate('login');
