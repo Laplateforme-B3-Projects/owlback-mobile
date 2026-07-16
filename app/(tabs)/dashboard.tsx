@@ -22,7 +22,7 @@ export default function DashboardScreen() {
         variant="main-vertical"
         className="h-auto items-center justify-start gap-5 px-4 py-20">
         <AnimateSlideWrapper>
-          <CustomAvatar username={user?.fullname} />
+          <CustomAvatar username={user?.fullname} url={'/settings'} />
         </AnimateSlideWrapper>
 
         <Container variant="vertical">
@@ -38,7 +38,7 @@ export default function DashboardScreen() {
           </AnimateSlideWrapper>
         </Container>
 
-        <CustomPressable className="mt-6 flex h-32 w-64 flex-col gap-0 overflow-hidden rounded-3xl border border-white/30">
+        <CustomPressable className="mt-6 flex h-32 w-64 flex-col gap-0 overflow-hidden">
           <Container variant="vertical" className="items-center gap-0">
             <Container variant="linear" className="items-center">
               <Text className="text-6xl font-black text-white">670</Text>

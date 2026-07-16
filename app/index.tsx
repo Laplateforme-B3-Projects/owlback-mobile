@@ -22,15 +22,19 @@ const version = Constants.expoConfig?.extra?.appVersion;
 export default function Screen() {
   const [isUserConnected, setIsUserConnected] = useState(false);
   const { colorScheme } = useColorScheme();
-  const { getToken } = useToken();
+  const { getToken, deleteToken } = useToken();
   const { getUser } = useUser();
   const router = useRouter();
 
   async function handlePress() {
     if (isUserConnected) {
       const success = await getUser();
-      console.log(success ? 'success' : 'failed');
-      if (success) router.replace('/dashboard');
+      if (!success) {
+        deleteToken();
+        router.push('/login');
+      } else {
+        router.push('/(tabs)/dashboard');
+      }
       return;
     }
     router.push('/login');

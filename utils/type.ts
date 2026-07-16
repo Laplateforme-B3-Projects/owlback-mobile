@@ -20,6 +20,7 @@ export interface User {
   metadata: Record<string, any> | null;
   company_id: number;
   created_at: string;
+  password_created_at_human: string;
   updated_at: string;
   phone_number?: string;
   isFullyRegistered?: boolean;

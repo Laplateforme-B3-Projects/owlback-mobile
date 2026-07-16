@@ -6,6 +6,7 @@ import { PortalHost } from '@rn-primitives/portal';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useColorScheme } from 'nativewind';
+import Toast from 'react-native-toast-message';
 import { useEffect } from 'react';
 
 export {
@@ -39,6 +40,7 @@ export default function RootLayout() {
         />
       </Stack>
       <PortalHost />
+      <Toast />
     </ThemeProvider>
   );
 }
