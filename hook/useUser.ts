@@ -5,10 +5,12 @@ import { isAxiosError } from 'axios';
 import axiosInstance from '@/utils/axios';
 import Toast from 'react-native-toast-message';
 import { navigate } from 'expo-router/build/global-state/routing';
+import useToken from '@/hook/useToken';
 
 export const useUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const updateUser = useUserStore((state) => state.updateUser);
+  const { deleteToken } = useToken();
 
   const getUser = async () => {
     setIsLoading(true);
@@ -24,13 +26,18 @@ export const useUser = () => {
       //'Une erreur est survenue lors de la connexion.';
       let message = isAxiosError(error) ? error?.response?.data?.message : error;
       console.error(message);
+      deleteToken();
       return false;
     } finally {
       setIsLoading(false);
     }
   };
 
-  const changePassword = async (current_password: string, password: string, password_confirmation: string) => {
+  const changePassword = async (
+    current_password: string,
+    password: string,
+    password_confirmation: string
+  ) => {
     setIsLoading(true);
     try {
       const response = await axiosInstance.put<{ data: JSON }>('/settings/password', {
@@ -51,10 +58,10 @@ export const useUser = () => {
     }
   };
 
-  const deleteUser = async (confirm_string:string) => {
+  const deleteUser = async (confirm_string: string) => {
     setIsLoading(true);
     try {
-      const response = await axiosInstance.delete<{data:JSON}>(`/user/delete`, {
+      const response = await axiosInstance.delete<{ data: JSON }>(`/user/delete`, {
         data: { confirm: confirm_string },
       });
       Toast.show({
@@ -64,7 +71,7 @@ export const useUser = () => {
         position: 'top',
         visibilityTime: 3000,
       });
-      navigate("/");
+      navigate('/');
       return true;
     } catch (error: any) {
       Toast.show({
