@@ -12,6 +12,7 @@ export default function LoginScreen() {
       <View>
         <Text>Ravi de vous revoir {user?.fullname}</Text>
         <Link href="/profile">profile</Link>
+        <Link href="/settings">settings</Link>
       </View>
     </AppLayout>
   );

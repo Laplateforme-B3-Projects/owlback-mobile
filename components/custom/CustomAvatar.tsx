@@ -13,7 +13,7 @@ export const CustomAvatar = ({ username = null,uri = null }:CustomAvatarProps) =
     className={'flex h-24 w-24 items-center justify-center rounded-full border border-[#F1895C]'}>
     <Avatar alt={username??"N/A"} className="h-20 w-20">
       <AvatarImage
-        source={{ uri: uri??URIFallback}}
+        source={{ uri: uri??URIFallback }}
         className="h-full w-full rounded-full"
       />
       <AvatarFallback>

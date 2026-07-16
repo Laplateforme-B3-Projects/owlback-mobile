@@ -5,13 +5,12 @@ import { cn } from '@/lib/utils';
 import { Text } from 'react-native';
 import { AnimateElasticWrapper } from '@/components/animate/AnimateElasticWrapper';
 
-export const CustomCancelButton = ({ onPress, icon, description = '' }: CustomButtonProps) => {
+export const CustomCancelButton = ({ onPress, icon, description = '' ,className}: CustomButtonProps) => {
   return (
     <AnimateElasticWrapper onAction={onPress} isInteractive={true}>
       <Button
         onPress={onPress}
-        variant={'destructive'}
-        className={cn('h-12 rounded-full', !description && 'w-12')}>
+        className={cn('h-12 rounded-full', !description && 'w-12',className)}>
         {icon && <Icon as={icon} size={24} />}
         {description && <Text className="text-base font-medium text-white">{description}</Text>}
       </Button>

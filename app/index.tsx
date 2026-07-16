@@ -29,10 +29,8 @@ export default function Screen() {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
   async function handlePress() {
-    console.log("isUserConnected",isUserConnected);
     if (isUserConnected) {
       const success = await getUser();
-      console.log(success ? 'success' : 'failed');
       if (!success){
         deleteToken();
         navigation.navigate('login');
