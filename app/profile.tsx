@@ -31,7 +31,7 @@ const confirmAlert = (title: string, message: string, onConfirm: () => void) =>
     { text: 'Supprimer', style: 'destructive', onPress: onConfirm },
   ]);
 
-export default function LoginScreen() {
+export default function ProfileScreen() {
   const [image, setImage] = useState<string>(PLACEHOLDER_AVATAR);
   const [version, setVersion] = useState(1);
   const [modalVisible, setModalVisible] = useState(false);
@@ -85,18 +85,18 @@ export default function LoginScreen() {
     <AppLayout showHeader>
       <View onLayout={() => fp.exists && setImage(destUri)}>
         <SafeAreaView className="mt-24">
-          <Container variant="vertical" className="min-h-full min-w-full pt-10 px-4">
+          <Container variant="vertical" className="min-h-full min-w-full px-4 pt-10">
             <Container variant="linear">
               <Pressable onLongPress={() => fp.exists && deleteAvatar()} onPress={pickAvatar}>
                 <CustomAvatar username={user?.fullname} uri={`${image}#${version}`} />
               </Pressable>
               <Container variant="vertical" className="pl-2">
                 <Text className="text-xl font-medium">{user?.fullname}</Text>
-                <Container variant="linear" className="gap-3 items-center">
-                  <Text className="text-sm font-100 text-zinc-200">{user?.email}</Text>
+                <Container variant="linear" className="items-center gap-3">
+                  <Text className="font-100 text-sm text-zinc-200">{user?.email}</Text>
                   <Pencil width={14} height={14} color="white" />
                 </Container>
-                <Text className="text-sm font-100 text-zinc-700">
+                <Text className="font-100 text-sm text-zinc-700">
                   Utilisateur depuis {user?.password_created_at_human}
                 </Text>
               </Container>
@@ -109,14 +109,15 @@ export default function LoginScreen() {
               <Text>Entreprise: TODO NOM ENTREPRISE</Text>
             </Container>
 
-            <Separator orientation="horizontal" className="bg-zinc-500 my-2" />
+            <Separator orientation="horizontal" className="my-2 bg-zinc-500" />
 
             <Container variant="vertical">
-              <Text className="font-bold text-xl text-zinc-300">Modifier le mot de passe</Text>
+              <Text className="text-xl font-bold text-zinc-300">Modifier le mot de passe</Text>
               <Text className="font-md text-sm text-zinc-300">
-                Assurez-vous d'utiliser un mot de passe long et aléatoire pour sécuriser votre compte.
+                Assurez-vous d'utiliser un mot de passe long et aléatoire pour sécuriser votre
+                compte.
               </Text>
-              <Container variant="vertical" className="bg-[#516079] p-2 rounded-xl mt-4">
+              <Container variant="vertical" className="mt-4 rounded-xl bg-[#516079] p-2">
                 <Formik
                   initialValues={{ current_password: '', password: '', password_confirmation: '' }}
                   onSubmit={async (values) => {
@@ -131,8 +132,7 @@ export default function LoginScreen() {
                     } else {
                       showToast('error', 'Erreur', 'Une erreur est survenue');
                     }
-                  }}
-                >
+                  }}>
                   {({ handleChange, handleSubmit, values }) => (
                     <Container variant="vertical" className="gap-3">
                       <CustomLoading visible={isLoading} />
@@ -164,7 +164,7 @@ export default function LoginScreen() {
                         <CustomClassicButton
                           onPress={() => handleSubmit()}
                           description="Modifier le mot de passe"
-                          className="max-w-max align-left"
+                          className="align-left max-w-max"
                         />
                       </Container>
                     </Container>
@@ -172,17 +172,21 @@ export default function LoginScreen() {
                 </Formik>
               </Container>
 
-              <Separator orientation="horizontal" className="bg-zinc-500 my-2" />
+              <Separator orientation="horizontal" className="my-2 bg-zinc-500" />
 
-              <Text className="text-app-secondary font-bold text-xl">Supprimer le compte</Text>
-              <Text className="text-zinc-500 font-light text-md">Supprimer définitivement le compte</Text>
+              <Text className="text-xl font-bold text-app-secondary">Supprimer le compte</Text>
+              <Text className="text-md font-light text-zinc-500">
+                Supprimer définitivement le compte
+              </Text>
               <Container className="vertical items-center">
                 <CustomCancelButton
                   description="Supprimer"
-                  className="bg-app-secondary w-52 mt-4 font-semibold"
+                  className="mt-4 w-52 bg-app-secondary font-semibold"
                   onPress={() =>
-                    confirmAlert('Supprimer le compte.', 'Cette action est irréversible. Voulez-vous continuer ?', () =>
-                      setModalVisible(true)
+                    confirmAlert(
+                      'Supprimer le compte.',
+                      'Cette action est irréversible. Voulez-vous continuer ?',
+                      () => setModalVisible(true)
                     )
                   }
                 />
@@ -191,12 +195,17 @@ export default function LoginScreen() {
           </Container>
         </SafeAreaView>
 
-        <Modal visible={modalVisible} transparent animationType="fade" onRequestClose={() => setModalVisible(false)}>
+        <Modal
+          visible={modalVisible}
+          transparent
+          animationType="fade"
+          onRequestClose={() => setModalVisible(false)}>
           <View style={styles.overlay}>
             <View style={styles.modal}>
-              <Text className="font-bold text-xl text-zinc-100 mb-2">Confirmer la suppression</Text>
-              <Text className="text-sm text-zinc-300 mb-4">
-                Cette action est irréversible. Tapez "CONFIRMER" pour supprimer définitivement votre compte.
+              <Text className="mb-2 text-xl font-bold text-zinc-100">Confirmer la suppression</Text>
+              <Text className="mb-4 text-sm text-zinc-300">
+                Cette action est irréversible. Tapez "CONFIRMER" pour supprimer définitivement votre
+                compte.
               </Text>
               <TextInput
                 className={inputStyle}
@@ -206,7 +215,7 @@ export default function LoginScreen() {
                 onChangeText={setConfirmInput}
                 autoCapitalize="characters"
               />
-              <Container variant="linear" className="gap-3 mt-4">
+              <Container variant="linear" className="mt-4 gap-3">
                 <CustomClassicButton
                   onPress={() => {
                     setModalVisible(false);
@@ -217,7 +226,7 @@ export default function LoginScreen() {
                 <CustomCancelButton
                   isDisabled={confirmInput !== 'CONFIRMER'}
                   onPress={handleDelete}
-                  className={`bg-app-secondary py-2 px-6 rounded-full opacity-${confirmInput !== 'CONFIRMER' ? '50' : '100'}`}
+                  className={`rounded-full bg-app-secondary px-6 py-2 opacity-${confirmInput !== 'CONFIRMER' ? '50' : '100'}`}
                   description="Supprimer"
                 />
               </Container>
@@ -230,6 +239,12 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  overlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.6)', justifyContent: 'center', alignItems: 'center', padding: 20 },
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
   modal: { backgroundColor: '#2f4558', borderRadius: 12, padding: 20, width: '100%' },
 });

@@ -31,8 +31,10 @@ export default function Screen() {
       const success = await getUser();
       if (!success) {
         deleteToken();
-        navigation.navigate('login');
-      } else navigation.navigate('dashboard');
+        router.push('/login');
+      } else {
+        router.push('/(tabs)/dashboard');
+      }
       return;
     }
     router.push('/login');
