@@ -22,7 +22,7 @@ const PLACEHOLDER_AVATAR = 'https://placehold.co/128/png';
 const inputStyle = 'bg-[#2f4558] py-2 px-1 rounded-md text-zinc-100 text-lg';
 const inputLabelStyle = 'font-semibold';
 
-const showToast = (type: 'success' | 'error', text1: string, text2: string) =>
+export const showToast = (type: 'success' | 'error', text1: string, text2: string) =>
   Toast.show({ type, text1, text2, position: 'top', visibilityTime: 3000 });
 
 const confirmAlert = (title: string, message: string, onConfirm: () => void) =>

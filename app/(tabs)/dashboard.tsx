@@ -12,12 +12,15 @@ import { MiniGraph } from '@/components/custom/MiniGraph';
 import { Separator } from '@/components/ui/separator';
 import { AnimateSlideWrapper } from '@/components/animate/AnimateSlideWrapper';
 import { styles } from '@/utils/styles';
+import { DashboardData, User } from '@/utils/type';
+import { useDashboard } from '@/hook/useDashboard';
 
 export default function DashboardScreen() {
   const user = useUserStore((state) => state.user);
+  const { dashboardData, isLoading, refetch } = useDashboard();
 
   return (
-    <AppLayout>
+    <AppLayout onRefresh={refetch}>
       <Container
         variant="main-vertical"
         className="h-auto items-center justify-start gap-5 px-4 py-20">
@@ -41,9 +44,10 @@ export default function DashboardScreen() {
         <CustomPressable className="mt-6 flex h-32 w-64 flex-col gap-0 overflow-hidden">
           <Container variant="vertical" className="items-center gap-0">
             <Container variant="linear" className="items-center">
-              <Text className="text-6xl font-black text-white">670</Text>
+              <Text className="text-6xl font-black text-white">{dashboardData?.totalAmount}€</Text>
+              {/* <Text className="text-6xl font-black text-white">670</Text>
               <Text className="text-4xl font-black text-white">,</Text>
-              <Text className="text-3xl font-black text-white">67€</Text>
+              <Text className="text-3xl font-black text-white">67€</Text> */}
             </Container>
             <Text className="text-sm font-semibold text-white"> Voir mes dépenses </Text>
           </Container>
@@ -57,7 +61,7 @@ export default function DashboardScreen() {
 
         <Separator className="bg-app-primary" />
 
-        <DashboardDocumentsView />
+        <DashboardDocumentsView dashboardData={dashboardData} />
 
         <Separator className="bg-app-primary" />
 
@@ -121,7 +125,7 @@ const NotificationsView = () => {
   );
 };
 
-const DashboardDocumentsView = () => {
+const DashboardDocumentsView = ({ dashboardData }: { dashboardData: DashboardData | null }) => {
   return (
     <Container variant="vertical" className="w-full items-start">
       <Text className="text-center text-3xl font-black text-[#C5C6C6]">Documents</Text>
@@ -130,25 +134,29 @@ const DashboardDocumentsView = () => {
         <Container className="mt-4 h-56 w-full rounded-2xl bg-app-primary">
           <Text>TODO: VIEW DOCUMENT FILE</Text>
         </Container>
-        <DocumentOverview />
+        <DocumentOverview dashboardData={dashboardData} />
       </Container>
     </Container>
   );
 };
 
-const DocumentOverview = () => {
+const DocumentOverview = ({ dashboardData }: { dashboardData: DashboardData | null }) => {
   return (
     <Container
       variant="linear"
       className="mt-4 h-32 w-full justify-between overflow-hidden rounded-2xl">
       <Container variant="vertical" className="flex-1 items-center justify-center bg-app-primary">
-        <Text className="text-3xl font-black">100</Text>
+        <Text className="text-3xl font-black">{dashboardData?.documentData.total_documents}</Text>
         <Text className="text-sm">documents</Text>
-        <Text className="text-3xl font-black">5</Text>
+        <Text className="text-3xl font-black">
+          {dashboardData?.documentData.total_documents_monthly}
+        </Text>
         <Text className="text-sm">ce mois-ci</Text>
       </Container>
       <Container variant="vertical" className="flex-1 items-center justify-center bg-app-secondary">
-        <Text className="text-3xl font-black">0</Text>
+        <Text className="text-3xl font-black">
+          {dashboardData?.documentData.total_documents_to_process}
+        </Text>
         <Text className="text-sm">requiert votre attention</Text>
       </Container>
     </Container>

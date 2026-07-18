@@ -26,6 +26,18 @@ export interface User {
   isFullyRegistered?: boolean;
 }
 
+export interface DashboardData {
+  documentData: DocumentData;
+  totalAmount: number;
+}
+
+// Here represents some record retrive by filters
+type DocumentData = {
+  total_documents: number;
+  total_documents_monthly: number;
+  total_documents_to_process: number;
+};
+
 export enum GenderEnum {
   FEMALE = 'FEMALE',
   MALE = 'MALE',
