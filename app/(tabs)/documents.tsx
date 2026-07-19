@@ -1,61 +1,31 @@
 import React from 'react';
-import { Pressable, View } from 'react-native';
 import { Text } from '@/components/ui/text';
 import { AppLayout } from '@/app/Layout/AppLayout';
 import { Container } from '@/components/custom/Container';
-import { ChevronLeft, FolderPlus, UploadIcon } from 'lucide-react-native';
-import { CustomClassicButton } from '@/components/custom/CustomClassicButton';
-import { handleClose } from '@/utils/utils';
-import { Input } from '@/components/ui/input';
-import { GlassView } from 'expo-glass-effect';
-import { styles } from '@/utils/styles';
+import { AnimateSlideWrapper } from '@/components/animate/AnimateSlideWrapper';
+import { useDocument } from '@/hook/useDocument';
+import { Headers } from '@/components/custom/Documents/Headers';
+import { DocumentOverview } from '@/components/custom/Documents/DocumentOverview';
 
 export default function DocumentScreen() {
+  const { documents, isLoading, refetch, trackDocumentView } = useDocument();
   return (
-    <AppLayout showHeader>
+    <AppLayout showHeader onRefresh={() => refetch()}>
       <Container
         variant="main-vertical"
-        className="h-auto items-center justify-start gap-5 px-4 py-20">
-        <Header />
-        <Text className="text-center text-5xl font-black">Mes Documents</Text>
-        <Text className="text-center text-2xl font-black text-[#C5C6C6]">
-          Retrouvez ici tous vos fichiers importés.
+        className="h-auto items-center justify-start gap-1 px-4 py-20">
+        <Headers />
+         <AnimateSlideWrapper>
+            <Text className="mt-8 text-center text-4xl font-black">Mes Notes de frais</Text>
+          </AnimateSlideWrapper>
+        
+        <Text className="text-center text-xl text-[#C5C6C6]">
+          Vous pouvez interagir avec vos fichiers comme bon vous semble ! Selon la règle en vigueur vos fichiers seront conservés pendant 6 ans.
         </Text>
+
+        <DocumentOverview documents={documents} refetch={refetch} trackDocumentView={trackDocumentView} />
       </Container>
     </AppLayout>
   );
 }
 
-const Header = () => {
-  return (
-    <View className="w-full flex-row items-center justify-start gap-2 px-4 pb-2">
-      <CustomClassicButton
-        onPress={handleClose}
-        icon={ChevronLeft}
-        description=""
-        className="w-12"
-      />
-
-      <Container className="h-12 flex-1 overflow-hidden rounded-full">
-        <GlassView glassEffectStyle={'clear'} style={styles.glassView} isInteractive />
-        <Input
-          className="h-full border-0 dark:bg-transparent"
-          placeholderTextColor="black"
-          placeholder="Rechercher..."
-        />
-      </Container>
-      <CustomClassicButton
-        onPress={handleClose}
-        icon={UploadIcon}
-        description=""
-        className="w-12"
-      />
-      <CustomClassicButton
-        onPress={handleClose}
-        icon={FolderPlus}
-        description=""
-        className="w-12"
-      />
-    </View>
-  );
-};

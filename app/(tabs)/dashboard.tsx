@@ -14,6 +14,7 @@ import { AnimateSlideWrapper } from '@/components/animate/AnimateSlideWrapper';
 import { styles } from '@/utils/styles';
 import { DashboardData, User } from '@/utils/type';
 import { useDashboard } from '@/hook/useDashboard';
+import { NotFound } from '@/components/custom/NotFound';
 
 export default function DashboardScreen() {
   const user = useUserStore((state) => state.user);
@@ -116,8 +117,8 @@ const AndroidPressable = ({ children, className = '', onPress }: CustomPressable
 const NotificationsView = () => {
   return (
     <Container variant="vertical" className="w-full items-start">
-      <Text className="text-center text-3xl font-black text-app-secondary">Notifications</Text>
-      <Container className="mt-4 h-32 w-full rounded-2xl bg-app-primary"></Container>
+      <Text className="text-center text-3xl font-black text-app-secondary mb-2">Notifications</Text>
+       <NotFound description="Aucun document importé récemment."  className="h-32 w-full rounded-2xl bg-app-primary"/>
       <Button variant={'link'} className="p-1">
         <Text className="font-100 text-sm text-app-secondary">Voir Plus</Text>
       </Button>
@@ -131,9 +132,7 @@ const DashboardDocumentsView = ({ dashboardData }: { dashboardData: DashboardDat
       <Text className="text-center text-3xl font-black text-[#C5C6C6]">Documents</Text>
       <Container variant="vertical" className="w-full py-3">
         <Text className="text-lg">Derniers documents importés</Text>
-        <Container className="mt-4 h-56 w-full rounded-2xl bg-app-primary">
-          <Text>TODO: VIEW DOCUMENT FILE</Text>
-        </Container>
+        <NotFound description="Aucun document importé récemment."  className="h-56 w-full rounded-2xl bg-app-primary"/>
         <DocumentOverview dashboardData={dashboardData} />
       </Container>
     </Container>
@@ -168,9 +167,7 @@ const DashboardActivitiesView = () => {
     <Container variant="vertical" className="w-full items-start">
       <Text className="text-center text-3xl font-black text-[#C5C6C6]">Activités</Text>
       <Container variant="vertical" className="w-full py-3">
-        <Container className="h-56 w-full rounded-2xl bg-app-primary">
-          <Text>TODO: activities</Text>
-        </Container>
+          <NotFound description="Aucune activité récente à afficher." className="h-56 w-full rounded-2xl bg-app-primary"/>
       </Container>
     </Container>
   );
@@ -183,9 +180,7 @@ const ChartFeeTypes = () => {
         Répartition des types de frais
       </Text>
       <Container variant="vertical" className="w-full py-3">
-        <Container className="h-56 w-full rounded-2xl bg-app-primary">
-          <Text>TODO: Chart</Text>
-        </Container>
+        <NotFound description="Aucun frais n'a été trouvé pour le moment." className="h-56 w-full rounded-2xl bg-app-primary"/>
       </Container>
     </Container>
   );

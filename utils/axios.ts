@@ -6,9 +6,9 @@ const axiosInstance = axios.create({
 });
 
 const { getToken } = useToken();
-// Intercepteur — injecte le token sur chaque requête
+// Intercepteur, il injecte le token sur chaque requête
 axiosInstance.interceptors.request.use(async (config) => {
-  const token = await getToken(); // ton hook useToken
+  const token = await getToken();
   console.log(process.env.EXPO_PUBLIC_URL, token);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
