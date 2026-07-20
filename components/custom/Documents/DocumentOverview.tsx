@@ -5,11 +5,15 @@ import { NotFound } from '@/components/custom/NotFound';
 import { DocumentCard } from '@/components/custom/Documents/DocumentCard';
 import { FolderCard } from '@/components/custom/Documents/FolderCard';
 import { router } from 'expo-router';
+import { FolderSkeleton } from '../Skeleton/FolderSkeleton';
+import { DocumentSkeleton } from '../Skeleton/DocumentSkeleton';
+import { Separator } from '@/components/ui/separator';
 
 interface DocumentOverviewProps {
   documents: (Folder | OwlbackFile)[];
   docsToProcess: OwlbackFile[];
   lastUploadedDocs: OwlbackFile[];
+  isLoading: boolean;
   refetch: (folderId?: number) => void;
   trackDocumentView: (documentId: number) => void;
   folderName?: string;
@@ -21,6 +25,7 @@ export const DocumentOverview = ({
   docsToProcess,
   lastUploadedDocs,
   refetch,
+  isLoading,
   trackDocumentView,
   folderName = 'Mes dossiers',
   isDepth = false,
@@ -29,31 +34,43 @@ export const DocumentOverview = ({
     <Container variant="vertical" className="w-full gap-2">
       <Text className="mt-8 text-4xl font-black text-app-secondary">{folderName}</Text>
 
-      <DocumentResolver
-        documents={documents}
-        refetch={refetch}
-        trackDocumentView={trackDocumentView}
-      />
+      {isLoading ? (
+        <FolderSkeleton />
+      ) : (
+        <DocumentResolver
+          documents={documents}
+          refetch={refetch}
+          trackDocumentView={trackDocumentView}
+        />
+      )}
 
       {/* //router.push(`/folder/${document.id}`) */}
       {!isDepth && (
         <>
           <Text className="mt-8 text-4xl font-black text-[#C5C6C6]">Récemments ajoutés</Text>
-          <DocumentResolver
-            documents={lastUploadedDocs}
-            refetch={refetch}
-            trackDocumentView={trackDocumentView}
-          />
+            {isLoading ? (
+              <DocumentSkeleton/>
+            ) :(
+              <DocumentResolver
+                documents={lastUploadedDocs}
+                refetch={refetch}
+                trackDocumentView={trackDocumentView}
+              />
+            )}
         </>
       )}
       {!isDepth && (
         <>
           <Text className="mt-8 text-4xl font-black text-[#C5C6C6]">Documents à traiter</Text>
-          <DocumentResolver
-            documents={docsToProcess}
-            refetch={refetch}
-            trackDocumentView={trackDocumentView}
-          />
+          {isLoading ? (
+            <DocumentSkeleton/>
+          ) : (
+            <DocumentResolver
+              documents={docsToProcess}
+              refetch={refetch}
+              trackDocumentView={trackDocumentView}
+            />
+          )}
         </>
       )}
     </Container>
@@ -73,16 +90,19 @@ const DocumentResolver = ({ documents, refetch, trackDocumentView }: DocumentRes
         <Container variant="vertical" className="gap-2">
           {documents.map((document: Folder | OwlbackFile, idx) =>
             document.is_folder ? (
-              <FolderCard
-                key={`folder-${document.id}`}
-                folder={document}
-                refetch={() =>
-                  router.push({
-                    pathname: '/folder/[folderId]',
-                    params: { folderId: document.id, parentFolderName: document.name },
-                  })
-                }
-              />
+              <>
+                <FolderCard
+                  key={`folder-${document.id}`}
+                  folder={document}
+                  refetch={() =>
+                    router.push({
+                      pathname: '/folder/[folderId]',
+                      params: { folderId: document.id, parentFolderName: document.name },
+                    })
+                  }
+                />  
+                <Separator className="bg-app-primary" />
+                </>
             ) : (
               <DocumentCard
                 key={`doc-${document.id}`}

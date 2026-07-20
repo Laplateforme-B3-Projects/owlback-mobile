@@ -4,6 +4,7 @@ import { CategoryType, DocumentStatusEnum } from '@/utils/enum';
 import { OwlbackFile } from '@/utils/type';
 import { Container } from '@/components/custom/Container';
 import { CategoryBadge } from '@/components/custom/Badges/CategoryBadge';
+import { ProcessBadge } from '@/components/custom/Badges/ProcessBadge';
 import { Thumbnail } from '@/components/custom/Images/Thumbnail';
 import { Pressable, View } from 'react-native';
 import { GlassView } from 'expo-glass-effect';
@@ -34,7 +35,7 @@ export const DocumentCard = ({ document, trackDocumentView }: DocumentCardProps)
   return (
     <View>
       <Pressable onPress={handleOpen}>
-        <Container variant="vertical" className="w-max-content h-24">
+        <Container variant="vertical" className="h-24">
           <GlassView glassEffectStyle="clear" style={styles.documentGlassView} isInteractive />
           {resolveColorStamp(document?.status)}
           <Container variant="linear" className="items-center justify-start gap-3 px-3 py-2">
@@ -42,7 +43,11 @@ export const DocumentCard = ({ document, trackDocumentView }: DocumentCardProps)
 
             <Container variant="vertical" className="h-full justify-between">
               <Text className="text-xl font-semibold text-zinc-50">{document.name}</Text>
-
+               {/* <ProcessBadge
+                    category={
+                        document.status ?? DocumentStatusEnum.WAITING
+                    }
+                /> */}
               <Container variant="linear" className="w-[280px] items-end justify-between">
                 <Text className="flex items-center gap-1 text-xs font-light text-zinc-300">
                   <TimerReset size={14} color={'#d4d4d8'} /> {document.updated_at}

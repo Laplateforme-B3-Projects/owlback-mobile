@@ -30,6 +30,7 @@ export default function DocumentScreen() {
           docsToProcess={docsToProcess}
           lastUploadedDocs={lastUploadedDocs}
           refetch={refetch}
+          isLoading={isLoading}
           trackDocumentView={trackDocumentView}
         />
       </Container>

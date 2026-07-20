@@ -3,6 +3,7 @@ import { Folder } from '@/utils/type';
 import { Text } from '@/components/ui/text';
 import { Container } from '@/components/custom/Container';
 import { Pressable, View } from 'react-native';
+import { cn } from '@/lib/utils';
 
 interface FolderCardProps {
   folder: Folder;
@@ -10,10 +11,14 @@ interface FolderCardProps {
 }
 
 export const FolderCard = ({ folder, refetch }: FolderCardProps) => {
+
   return (
     <View>
-      <Pressable onPress={() => refetch(folder.id)} className="bg-red-500">
-        <Container variant="linear">
+      <Pressable onPress={() =>{refetch(folder.id)}}>
+        {({ pressed }) => (
+        <Container variant="linear" className={cn('rounded-md bg-transparent',
+          pressed && 'bg-blue-500/30'
+        )}>
           <Container
             variant="vertical"
             className="w-full items-center justify-between gap-5 rounded-md bg-transparent p-2">
@@ -27,7 +32,7 @@ export const FolderCard = ({ folder, refetch }: FolderCardProps) => {
               </Container>
             </Container>
           </Container>
-        </Container>
+        </Container>)}
       </Pressable>
     </View>
   );

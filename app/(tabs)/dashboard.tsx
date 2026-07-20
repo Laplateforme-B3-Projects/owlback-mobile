@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from 'react-native';
+import { Platform, Pressable, StyleSheet } from 'react-native';
 import { Text } from '@/components/ui/text';
 import useUserStore from '@/hook/store/useUserStore';
 import { AppLayout } from '@/app/Layout/AppLayout';
@@ -21,13 +21,14 @@ import { useDocument } from '@/hook/useDocument';
 import { Skeleton } from '@/components/ui/skeleton';
 import { LinesSkeleton } from '@/components/custom/Skeleton/LinesSkeleton';
 import { CircleSkeleton } from '@/components/custom/Skeleton/CircleSkeleton';
+import { DocumentSkeleton } from '@/components/custom/Skeleton/DocumentSkeleton';
+import { DocumentInformationsSkeleton } from '@/components/custom/Skeleton/DocumentInformationsSkeleton';
 
 export default function DashboardScreen() {
   const user = useUserStore((state) => state.user);
   const { dashboardData, isLoading, refetch } = useDashboard();
   const {
     lastUploadedDocs,
-    docsToProcess,
     isLoading: isDocumentLoading,
     trackDocumentView,
   } = useDocument();
@@ -54,13 +55,10 @@ export default function DashboardScreen() {
           </AnimateSlideWrapper>
         </Container>
 
-        <CustomPressable className="mt-6 flex h-32 w-64 flex-col gap-0 overflow-hidden">
+        <CustomPressable className="mt-3 flex h-32 w-64 flex-col gap-0  pt-6">
           <Container variant="vertical" className="items-center gap-0">
             <Container variant="linear" className="items-center">
               <Text className="text-6xl font-black text-white">{dashboardData?.totalAmount}€</Text>
-              {/* <Text className="text-6xl font-black text-white">670</Text>
-              <Text className="text-4xl font-black text-white">,</Text>
-              <Text className="text-3xl font-black text-white">67€</Text> */}
             </Container>
             <Text className="text-sm font-semibold text-white"> Voir mes dépenses </Text>
           </Container>
@@ -71,20 +69,29 @@ export default function DashboardScreen() {
         <Separator className="bg-app-primary" />
 
         {isLoading ? <LinesSkeleton /> : <NotificationsView />}
-        <CircleSkeleton />
-        <Separator className="bg-app-primary" />
-
-        <DashboardDocumentsView
-          dashboardData={dashboardData}
-          lastUploadedDocs={lastUploadedDocs}
-          trackDocumentView={trackDocumentView}
-        />
 
         <Separator className="bg-app-primary" />
 
-        <DashboardActivitiesView />
+        
 
-        <ChartFeeTypes />
+        {isDocumentLoading ? (
+          <>
+            <DocumentSkeleton/>
+            <DocumentInformationsSkeleton/>
+          </>
+        ) : (
+          <DashboardDocumentsView
+            dashboardData={dashboardData}
+            lastUploadedDocs={lastUploadedDocs}
+            trackDocumentView={trackDocumentView}
+          />
+        )}
+
+        <Separator className="bg-app-primary" />
+
+        {isLoading ? <LinesSkeleton /> : <DashboardActivitiesView /> }
+
+          {isLoading ? <CircleSkeleton/> : <ChartFeeTypes />}
       </Container>
     </AppLayout>
   );
@@ -112,13 +119,13 @@ export const CustomPressable = ({ children, className = '', onPress }: CustomPre
 
 const IosPressable = ({ children, className = '', onPress }: CustomPressable) => {
   return (
-    <Button
-      variant="ghost"
-      className={cn('active:!bg-white/30 dark:active:scale-105', className)}
-      onPress={onPress}>
+    <Pressable
+      onPress={onPress}
+      className={cn(className)}
+    >
       <GlassView glassEffectStyle="clear" style={styles.glassView} isInteractive />
       {children}
-    </Button>
+    </Pressable>
   );
 };
 
@@ -176,13 +183,13 @@ const DashboardDocumentsView = ({
           />
         )}
 
-        <DocumentOverview dashboardData={dashboardData} />
+        <DocumentInformations dashboardData={dashboardData} />
       </Container>
     </Container>
   );
 };
 
-const DocumentOverview = ({ dashboardData }: { dashboardData: DashboardData | null }) => {
+const DocumentInformations = ({ dashboardData }: { dashboardData: DashboardData | null }) => {
   return (
     <Container
       variant="linear"

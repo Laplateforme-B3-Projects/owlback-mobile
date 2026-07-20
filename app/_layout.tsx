@@ -38,6 +38,16 @@ export default function RootLayout() {
             headerShown: false,
           }}
         />
+        {/* TODO <Stack.Screen
+          name="document"
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_right',
+            //gestureEnabled: true,
+            gestureDirection: 'horizontal',
+            headerShown: false,
+          }}
+        /> */}
       </Stack>
       <PortalHost />
       <Toast />

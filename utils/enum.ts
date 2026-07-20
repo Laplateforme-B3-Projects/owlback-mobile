@@ -1,11 +1,3 @@
-export enum DocumentStatusEnum {
-    ARCHIVED = 'ARCHIVED',
-    FAILED = 'FAILED',
-    PROCESSED = 'PROCESSED',
-    WAITING = 'WAITING',
-    WARNING = 'WARNING',
-}
-
 export enum CategoryType {
     ALL = 'ALL',
     ACCOMMODATION = 'ACCOMMODATION',
@@ -53,3 +45,19 @@ export const CategoryTypeMapping: Record<CategoryType, string> = {
     TRANSPORT: 'Transport',
     UNKNOWN: 'Inconnu',
 };
+
+export const DocumentStatusMapping: Record<DocumentStatusEnum, string> = {
+    WAITING: 'En attente',
+    PROCESSED: 'Traité',
+    WARNING: 'À vérifier',
+    FAILED: 'Erreur de traitement',
+    ARCHIVED: 'Archivé',
+};
+
+export enum DocumentStatusEnum {
+    ARCHIVED = 'ARCHIVED',
+    FAILED = 'FAILED',
+    PROCESSED = 'PROCESSED',
+    WAITING = 'WAITING',
+    WARNING = 'WARNING',
+}
