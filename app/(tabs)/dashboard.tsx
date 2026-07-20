@@ -12,13 +12,24 @@ import { MiniGraph } from '@/components/custom/MiniGraph';
 import { Separator } from '@/components/ui/separator';
 import { AnimateSlideWrapper } from '@/components/animate/AnimateSlideWrapper';
 import { styles } from '@/utils/styles';
-import { DashboardData, User } from '@/utils/type';
+import { DashboardData, OwlbackFile, User } from '@/utils/type';
 import { useDashboard } from '@/hook/useDashboard';
 import { NotFound } from '@/components/custom/NotFound';
+import { router } from 'expo-router';
+import { DocumentCard } from '@/components/custom/Documents/DocumentCard';
+import { useDocument } from '@/hook/useDocument';
+import { Skeleton } from '@/components/ui/skeleton';
+import { LinesSkeleton } from '@/components/custom/Skeleton/LinesSkeleton';
 
 export default function DashboardScreen() {
   const user = useUserStore((state) => state.user);
   const { dashboardData, isLoading, refetch } = useDashboard();
+  const {
+    lastUploadedDocs,
+    docsToProcess,
+    isLoading: isDocumentLoading,
+    trackDocumentView,
+  } = useDocument();
 
   return (
     <AppLayout onRefresh={refetch}>
@@ -26,7 +37,7 @@ export default function DashboardScreen() {
         variant="main-vertical"
         className="h-auto items-center justify-start gap-5 px-4 py-20">
         <AnimateSlideWrapper>
-          <CustomAvatar username={user?.fullname} url={'/settings'} />
+          <CustomAvatar username={user?.fullname} onPress={() => router.push('/settings')} />
         </AnimateSlideWrapper>
 
         <Container variant="vertical">
@@ -58,11 +69,15 @@ export default function DashboardScreen() {
 
         <Separator className="bg-app-primary" />
 
-        <NotificationsView />
-
+        {isLoading ? <LinesSkeleton /> : <NotificationsView />}
+        <LinesSkeleton />
         <Separator className="bg-app-primary" />
 
-        <DashboardDocumentsView dashboardData={dashboardData} />
+        <DashboardDocumentsView
+          dashboardData={dashboardData}
+          lastUploadedDocs={lastUploadedDocs}
+          trackDocumentView={trackDocumentView}
+        />
 
         <Separator className="bg-app-primary" />
 
@@ -117,8 +132,11 @@ const AndroidPressable = ({ children, className = '', onPress }: CustomPressable
 const NotificationsView = () => {
   return (
     <Container variant="vertical" className="w-full items-start">
-      <Text className="text-center text-3xl font-black text-app-secondary mb-2">Notifications</Text>
-       <NotFound description="Aucun document importé récemment."  className="h-32 w-full rounded-2xl bg-app-primary"/>
+      <Text className="mb-2 text-center text-3xl font-black text-app-secondary">Notifications</Text>
+      <NotFound
+        description="Aucun document importé récemment."
+        className="h-32 w-full rounded-2xl bg-app-primary"
+      />
       <Button variant={'link'} className="p-1">
         <Text className="font-100 text-sm text-app-secondary">Voir Plus</Text>
       </Button>
@@ -126,13 +144,37 @@ const NotificationsView = () => {
   );
 };
 
-const DashboardDocumentsView = ({ dashboardData }: { dashboardData: DashboardData | null }) => {
+const DashboardDocumentsView = ({
+  dashboardData,
+  lastUploadedDocs,
+  trackDocumentView,
+}: {
+  dashboardData: DashboardData | null;
+  lastUploadedDocs: OwlbackFile[];
+  trackDocumentView: (documentId: number) => void;
+}) => {
   return (
     <Container variant="vertical" className="w-full items-start">
       <Text className="text-center text-3xl font-black text-[#C5C6C6]">Documents</Text>
       <Container variant="vertical" className="w-full py-3">
         <Text className="text-lg">Derniers documents importés</Text>
-        <NotFound description="Aucun document importé récemment."  className="h-56 w-full rounded-2xl bg-app-primary"/>
+        {lastUploadedDocs.length >= 1 ? (
+          <Container variant="vertical" className="gap-2">
+            {lastUploadedDocs.map((document: OwlbackFile) => (
+              <DocumentCard
+                key={`doc-${document.id}`}
+                document={document}
+                trackDocumentView={trackDocumentView}
+              />
+            ))}
+          </Container>
+        ) : (
+          <NotFound
+            description="Aucun document importé récemment."
+            className="h-56 w-full rounded-2xl bg-app-primary"
+          />
+        )}
+
         <DocumentOverview dashboardData={dashboardData} />
       </Container>
     </Container>
@@ -167,7 +209,10 @@ const DashboardActivitiesView = () => {
     <Container variant="vertical" className="w-full items-start">
       <Text className="text-center text-3xl font-black text-[#C5C6C6]">Activités</Text>
       <Container variant="vertical" className="w-full py-3">
-          <NotFound description="Aucune activité récente à afficher." className="h-56 w-full rounded-2xl bg-app-primary"/>
+        <NotFound
+          description="Aucune activité récente à afficher."
+          className="h-56 w-full rounded-2xl bg-app-primary"
+        />
       </Container>
     </Container>
   );
@@ -180,7 +225,10 @@ const ChartFeeTypes = () => {
         Répartition des types de frais
       </Text>
       <Container variant="vertical" className="w-full py-3">
-        <NotFound description="Aucun frais n'a été trouvé pour le moment." className="h-56 w-full rounded-2xl bg-app-primary"/>
+        <NotFound
+          description="Aucun frais n'a été trouvé pour le moment."
+          className="h-56 w-full rounded-2xl bg-app-primary"
+        />
       </Container>
     </Container>
   );

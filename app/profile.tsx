@@ -87,9 +87,12 @@ export default function ProfileScreen() {
         <SafeAreaView className="mt-24">
           <Container variant="vertical" className="min-h-full min-w-full px-4 pt-10">
             <Container variant="linear">
-              <Pressable onLongPress={() => fp.exists && deleteAvatar()} onPress={pickAvatar}>
-                <CustomAvatar username={user?.fullname} uri={`${image}#${version}`} />
-              </Pressable>
+              <CustomAvatar
+                username={user?.fullname}
+                uri={`${image}#${version}`}
+                onLongPress={() => fp.exists && deleteAvatar()}
+                onPress={pickAvatar}
+              />
               <Container variant="vertical" className="pl-2">
                 <Text className="text-xl font-medium">{user?.fullname}</Text>
                 <Container variant="linear" className="items-center gap-3">
@@ -100,18 +103,17 @@ export default function ProfileScreen() {
                   <Building width={14} height={14} color="white" />
                   <Text className="font-100 text-sm text-zinc-50">{user?.company_name}</Text>
                 </Container>
-                <Text className="font-100 text-sm text-zinc-300 italic">
-                  Première connexion {user?.password_created_at_human ?? "11"}
+                <Text className="font-100 text-sm italic text-zinc-300">
+                  Première connexion {user?.password_created_at_human ?? 'N/A'}
                 </Text>
               </Container>
             </Container>
-
 
             <Separator orientation="horizontal" className="my-4 bg-zinc-500" />
 
             <Container variant="vertical">
               <Text className="text-xl font-bold text-zinc-300">Modifier le mot de passe</Text>
-              <Text className="font-md text-sm text-zinc-300 italic">
+              <Text className="font-md text-sm italic text-zinc-300">
                 Assurez-vous d'utiliser un mot de passe long et aléatoire pour sécuriser votre
                 compte.
               </Text>
@@ -173,10 +175,10 @@ export default function ProfileScreen() {
               <Separator orientation="horizontal" className="my-8 bg-zinc-500" />
 
               <Text className="text-xl font-bold text-app-secondary">Supprimer le compte</Text>
-              <Text className="text-md font-light text-zinc-500 italic">
+              <Text className="text-md font-light italic text-zinc-500">
                 Supprimer définitivement le compte
               </Text>
-              <Container variant="linear" className="w-full justify-center items-center">
+              <Container variant="linear" className="w-full items-center justify-center">
                 <CustomCancelButton
                   description="Supprimer"
                   className="mt-4 w-64 bg-app-secondary font-semibold"

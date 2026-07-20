@@ -1,4 +1,4 @@
-import { CategoryType, DocumentStatusEnum } from "./enum";
+import { CategoryType, DocumentStatusEnum } from './enum';
 
 export interface UserAuth {
   message: string;
@@ -35,13 +35,11 @@ export interface DashboardData {
 }
 
 export type Breadcrumb = {
-    path: string;
-    parents: ParentsBreadcrumb[];
+  path: string;
+  parents: ParentsBreadcrumb[];
 };
 
 export type ParentsBreadcrumb = { name: string; id: number };
-
-
 
 // Here represents some record retrive by filters
 type DocumentData = {
@@ -50,34 +48,40 @@ type DocumentData = {
   total_documents_to_process: number;
 };
 
+export interface DocumentAPIData {
+  documents: Folder[] | OwlbackFile[];
+  last_uploaded: OwlbackFile[];
+  to_process: OwlbackFile[];
+}
+
 interface Document {
-    id: number;
-    user_id: number;
-    user_fullname: string;
-    parent_id?: number;
-    name: string;
-    note?: string;
-    metadata?: any;
-    created_at: string;
-    updated_at: string;
-    breadcrumb: Breadcrumb;
+  id: number;
+  user_id: number;
+  user_fullname: string;
+  parent_id?: number;
+  name: string;
+  note?: string;
+  metadata?: any;
+  created_at: string;
+  updated_at: string;
+  breadcrumb: Breadcrumb;
 }
 
 export interface OwlbackFile extends Document {
-    filename: string;
-    status?: DocumentStatusEnum;
-    category?: CategoryType;
-    is_folder: 0;
-    content?: string;
-    preview_url?: string;
-    media_url: string;
-    mime_type: string;
-    size: string;
+  filename: string;
+  status?: DocumentStatusEnum;
+  category?: CategoryType;
+  is_folder: 0;
+  content?: string;
+  preview_url?: string;
+  media_url: string;
+  mime_type: string;
+  size: string;
 }
 
 export interface Folder extends Document {
-    get_children_count?: number;
-    is_folder: 1;
+  get_children_count?: number;
+  is_folder: 1;
 }
 
 export enum GenderEnum {

@@ -1,68 +1,49 @@
-import { FileText, Image } from "lucide-react-native";
-import { OwlbackFile } from "@/utils/type";
-import { Container } from "@/components/custom/Container";
-
+import { Image } from 'react-native';
+import { Image as ImageIcon, FileText } from 'lucide-react-native';
+import { Container } from '@/components/custom/Container';
+import { OwlbackFile } from '@/utils/type';
+import { Text } from '@/components/ui/text';
+import { adaptMediaUrl } from '@/utils/utils';
 
 interface ThumbnailProps {
-    document: OwlbackFile;
+  document: OwlbackFile;
 }
 
 export const Thumbnail = ({ document }: ThumbnailProps) => (
-    <Container
-        variant="linear"
-        className="justify-center items-center min-w-25 h-25 overflow-hidden rounded-md bg-zinc-800"
-    >
-        <ThumbnailContent document={document} />
-    </Container>
+  <Container
+    variant="linear"
+    className="h-15 min-w-15 items-center justify-center overflow-hidden rounded-md bg-zinc-800">
+    <ThumbnailContent document={document} />
+  </Container>
 );
 
 const ThumbnailContent = ({ document }: ThumbnailProps) => {
-    const hasPreviewUrl = document.preview_url && document.preview_url !== '';
-    const hasMediaUrl = !!document.media_url;
-    const isPDF = document.mime_type === 'application/pdf';
+  const hasPreviewUrl = document.preview_url && document.preview_url !== '';
+  const hasMediaUrl = !!document.media_url;
+  const isPDF = document.mime_type === 'application/pdf';
+  if (!hasPreviewUrl && !hasMediaUrl) {
+    return <ThumbnailFallback isPDF={isPDF} />;
+  }
 
-    if (!hasPreviewUrl && !hasMediaUrl) {
-        return <ThumbnailFallback isPDF={isPDF} />;
-    }
-
-    return (
-        <>
-            {isPDF && !hasPreviewUrl ? (
-                <embed
-                    type={document.mime_type}
-                    src={
-                        hasPreviewUrl
-                            ? document.preview_url
-                            : document.media_url
-                    }
-                    className="h-full w-full object-cover"
-                />
-            ) : (
-                <img
-                    src={
-                        hasPreviewUrl
-                            ? document.preview_url
-                            : document.media_url
-                    }
-                    alt="document-name"
-                    className="h-full w-full object-cover"
-                />
-            )}
-        </>
-    );
+  return (
+    <>
+      <Image
+        source={{
+          uri: hasPreviewUrl
+            ? adaptMediaUrl(document.preview_url ?? '')
+            : adaptMediaUrl(document.media_url),
+        }}
+        className="h-20 w-20"
+        resizeMode="cover"
+      />
+    </>
+  );
 };
 
 const ThumbnailFallback = ({ isPDF }: { isPDF: boolean }) => {
-    return (
-        <Container
-            variant="vertical"
-           className="h-full w-full justify-center items-center bg-blue-900"
-        >
-            {isPDF ? (
-                <FileText color={'#C5C6C6'} />
-            ) : (
-                <Image color={'#C5C6C6'} />
-            )}
-        </Container>
-    );
+  return (
+    <Container variant="vertical" className="h-20 w-20 items-center justify-center bg-blue-900">
+      {isPDF ? <FileText color={'#C5C6C6'} /> : <ImageIcon color={'#C5C6C6'} />}
+    </Container>
+  );
 };

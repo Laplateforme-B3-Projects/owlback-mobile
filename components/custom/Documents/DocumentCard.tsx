@@ -5,79 +5,57 @@ import { OwlbackFile } from '@/utils/type';
 import { Container } from '@/components/custom/Container';
 import { CategoryBadge } from '@/components/custom/Badges/CategoryBadge';
 import { Thumbnail } from '@/components/custom/Images/Thumbnail';
-import { Pressable } from 'react-native';
+import { Pressable, View } from 'react-native';
+import { GlassView } from 'expo-glass-effect';
+import { styles } from '@/utils/styles';
 
 interface DocumentCardProps {
-    document: OwlbackFile;
-    trackDocumentView: (documentId: number) => void;
+  document: OwlbackFile;
+  trackDocumentView: (documentId: number) => void;
 }
 
 export const DocumentCard = ({ document, trackDocumentView }: DocumentCardProps) => {
-    const handleOpen = () => {
-        trackDocumentView(document.id);
-        //TODO : Open document in a new screen or modal
-    };
+  const handleOpen = () => {
+    trackDocumentView(document.id);
+    //TODO : Open document in a new screen or modal
+  };
 
-    const resolveColorStamp = (
-        documentStatus: DocumentStatusEnum | undefined,
-    ) => {
-        switch (documentStatus) {
-            case DocumentStatusEnum.FAILED:
-                return (
-                    <Text className="absolute right-2 h-2 w-2 rounded-full bg-red-500"></Text>
-                );
-            case DocumentStatusEnum.WARNING:
-                return (
-                    <Text className="absolute right-2 h-2 w-2 rounded-full bg-yellow-500"></Text>
-                );
-            default:
-                return null;
-        }
-    };
+  const resolveColorStamp = (documentStatus: DocumentStatusEnum | undefined) => {
+    switch (documentStatus) {
+      case DocumentStatusEnum.FAILED:
+        return <Text className="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500"></Text>;
+      case DocumentStatusEnum.WARNING:
+        return <Text className="absolute right-2 top-2 h-2 w-2 rounded-full bg-yellow-500"></Text>;
+      default:
+        return null;
+    }
+  };
 
-    return (
-        <>
-            <Pressable onPress={handleOpen}>
-                <Container
-                    variant="vertical"
-                    className=""
-                >
-                    {resolveColorStamp(document?.status)}
-                    <Container
-                        variant="linear"
-                        className="items-center h-full w-75 gap-3"
-                    >
-                        <Thumbnail document={document} />
+  return (
+    <View>
+      <Pressable onPress={handleOpen}>
+        <Container variant="vertical" className="w-max-content h-24">
+          <GlassView glassEffectStyle="clear" style={styles.documentGlassView} isInteractive />
+          {resolveColorStamp(document?.status)}
+          <Container variant="linear" className="items-center justify-start gap-3 px-3 py-2">
+            <Thumbnail document={document} />
 
-                        <Container
-                            variant="vertical"
-                            className="justify-between h-full w-full"
-                        >
-                            <Container className="flex flex-col items-start gap-0">
-                                <CategoryBadge
-                                    category={
-                                        document?.category ??
-                                        CategoryType.UNKNOWN
-                                    }
-                                />
+            <Container variant="vertical" className="h-full justify-between">
+              <Text className="text-xl font-semibold text-zinc-50">{document.name}</Text>
 
-                                <Text className="font-light text-xs text-zinc-300 flex items-center">
-                                    {<User size={14} />}{' '}
-                                    {document.user_fullname}
-                                </Text>
+              <Container variant="linear" className="w-[280px] items-end justify-between">
+                <Text className="flex items-center gap-1 text-xs font-light text-zinc-300">
+                  <TimerReset size={14} color={'#d4d4d8'} /> {document.updated_at}
+                </Text>
 
-                                <Text className="font-light text-xs text-zinc-300">
-                                    {document.mime_type} • {document.size}
-                                </Text>
-                            </Container>
-
-                            <Text className="font-light text-xs text-zinc-300 flex gap-1 items-center self-end">
-                                <TimerReset size={14} /> {document.updated_at}
-                            </Text>
-                        </Container>
-                    </Container>
+                <Container className="flex flex-col">
+                  <CategoryBadge category={document?.category ?? CategoryType.UNKNOWN} />
                 </Container>
-            </Pressable>
-        </>
-    );
+              </Container>
+            </Container>
+          </Container>
+        </Container>
+      </Pressable>
+    </View>
+  );
 };

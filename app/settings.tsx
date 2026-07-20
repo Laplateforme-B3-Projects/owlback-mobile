@@ -20,7 +20,7 @@ import {
   X,
 } from 'lucide-react-native';
 import axios from 'axios';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import useToken from '@/hook/useToken';
 import { navigate } from 'expo-router/build/global-state/routing';
 import Toast from 'react-native-toast-message';
@@ -76,7 +76,7 @@ export default function SettingsScreen() {
               <CustomAvatar
                 username={user?.fullname}
                 uri={fp.exists ? destUri : image}
-                url={'/profile'}
+                onPress={() => router.push('/profile')}
               />
               <Text className="text-xl font-medium">{user?.fullname}</Text>
               <Text className="font-100 text-sm text-zinc-200">{user?.email}</Text>

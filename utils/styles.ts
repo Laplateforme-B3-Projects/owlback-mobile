@@ -9,4 +9,12 @@ export const styles = StyleSheet.create({
     bottom: 0,
     borderRadius: 25,
   },
+  documentGlassView: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    borderRadius: 12,
+  },
 });
