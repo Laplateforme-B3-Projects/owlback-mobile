@@ -20,6 +20,7 @@ import { DocumentCard } from '@/components/custom/Documents/DocumentCard';
 import { useDocument } from '@/hook/useDocument';
 import { Skeleton } from '@/components/ui/skeleton';
 import { LinesSkeleton } from '@/components/custom/Skeleton/LinesSkeleton';
+import { CircleSkeleton } from '@/components/custom/Skeleton/CircleSkeleton';
 
 export default function DashboardScreen() {
   const user = useUserStore((state) => state.user);
@@ -70,7 +71,7 @@ export default function DashboardScreen() {
         <Separator className="bg-app-primary" />
 
         {isLoading ? <LinesSkeleton /> : <NotificationsView />}
-        <LinesSkeleton />
+        <CircleSkeleton />
         <Separator className="bg-app-primary" />
 
         <DashboardDocumentsView
