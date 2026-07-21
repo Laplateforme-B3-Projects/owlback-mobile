@@ -3,11 +3,11 @@ import { Container } from '../Container';
 
 export const DocumentInformationsSkeleton = () => {
   return (
-     <Container
+    <Container
       variant="linear"
-      className="h-32 w-full justify-center items-center overflow-hidden rounded-2xl gap-1">
-        <Skeleton className="h-32 w-full" />
-        <Skeleton className="h-32 w-full" />
-      </Container>
+      className="h-32 w-full items-center justify-center gap-1 overflow-hidden rounded-2xl">
+      <Skeleton className="h-32 w-full" />
+      <Skeleton className="h-32 w-full" />
+    </Container>
   );
 };

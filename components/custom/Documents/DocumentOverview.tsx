@@ -15,7 +15,6 @@ interface DocumentOverviewProps {
   lastUploadedDocs: OwlbackFile[];
   isLoading: boolean;
   refetch: (folderId?: number) => void;
-  trackDocumentView: (documentId: number) => void;
   folderName?: string;
   isDepth?: boolean;
 }
@@ -26,7 +25,6 @@ export const DocumentOverview = ({
   lastUploadedDocs,
   refetch,
   isLoading,
-  trackDocumentView,
   folderName = 'Mes dossiers',
   isDepth = false,
 }: DocumentOverviewProps) => {
@@ -35,42 +33,25 @@ export const DocumentOverview = ({
       <Text className="mt-8 text-4xl font-black text-app-secondary">{folderName}</Text>
 
       {isLoading ? (
-        <FolderSkeleton />
+        <>
+          <FolderSkeleton />
+          {isDepth && <DocumentSkeleton />}
+        </>
       ) : (
-        <DocumentResolver
-          documents={documents}
-          refetch={refetch}
-          trackDocumentView={trackDocumentView}
-        />
+        <DocumentResolver documents={documents} />
       )}
 
       {/* //router.push(`/folder/${document.id}`) */}
       {!isDepth && (
         <>
           <Text className="mt-8 text-4xl font-black text-[#C5C6C6]">Récemments ajoutés</Text>
-            {isLoading ? (
-              <DocumentSkeleton/>
-            ) :(
-              <DocumentResolver
-                documents={lastUploadedDocs}
-                refetch={refetch}
-                trackDocumentView={trackDocumentView}
-              />
-            )}
+          {isLoading ? <DocumentSkeleton /> : <DocumentResolver documents={lastUploadedDocs} />}
         </>
       )}
       {!isDepth && (
         <>
           <Text className="mt-8 text-4xl font-black text-[#C5C6C6]">Documents à traiter</Text>
-          {isLoading ? (
-            <DocumentSkeleton/>
-          ) : (
-            <DocumentResolver
-              documents={docsToProcess}
-              refetch={refetch}
-              trackDocumentView={trackDocumentView}
-            />
-          )}
+          {isLoading ? <DocumentSkeleton /> : <DocumentResolver documents={docsToProcess} />}
         </>
       )}
     </Container>
@@ -79,20 +60,17 @@ export const DocumentOverview = ({
 
 interface DocumentResolverProps {
   documents: (Folder | OwlbackFile)[];
-  refetch: (folderId?: number) => void;
-  trackDocumentView: (documentId: number) => void;
 }
 
-const DocumentResolver = ({ documents, refetch, trackDocumentView }: DocumentResolverProps) => {
+const DocumentResolver = ({ documents }: DocumentResolverProps) => {
   return (
     <>
       {documents?.length >= 1 ? (
         <Container variant="vertical" className="gap-2">
           {documents.map((document: Folder | OwlbackFile, idx) =>
             document.is_folder ? (
-              <>
+              <Container key={`folder-${document.id}`}>
                 <FolderCard
-                  key={`folder-${document.id}`}
                   folder={document}
                   refetch={() =>
                     router.push({
@@ -100,15 +78,11 @@ const DocumentResolver = ({ documents, refetch, trackDocumentView }: DocumentRes
                       params: { folderId: document.id, parentFolderName: document.name },
                     })
                   }
-                />  
+                />
                 <Separator className="bg-app-primary" />
-                </>
+              </Container>
             ) : (
-              <DocumentCard
-                key={`doc-${document.id}`}
-                document={document}
-                trackDocumentView={trackDocumentView}
-              />
+              <DocumentCard key={`doc-${document.id}`} document={document} />
             )
           )}
         </Container>

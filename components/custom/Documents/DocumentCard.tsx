@@ -9,16 +9,18 @@ import { Thumbnail } from '@/components/custom/Images/Thumbnail';
 import { Pressable, View } from 'react-native';
 import { GlassView } from 'expo-glass-effect';
 import { styles } from '@/utils/styles';
+import { router } from 'expo-router';
 
 interface DocumentCardProps {
   document: OwlbackFile;
-  trackDocumentView: (documentId: number) => void;
 }
 
-export const DocumentCard = ({ document, trackDocumentView }: DocumentCardProps) => {
+export const DocumentCard = ({ document }: DocumentCardProps) => {
   const handleOpen = () => {
-    trackDocumentView(document.id);
-    //TODO : Open document in a new screen or modal
+    router.push({
+      pathname: '/document-screen',
+      params: { documentId: document.id },
+    });
   };
 
   const resolveColorStamp = (documentStatus: DocumentStatusEnum | undefined) => {
@@ -43,7 +45,7 @@ export const DocumentCard = ({ document, trackDocumentView }: DocumentCardProps)
 
             <Container variant="vertical" className="h-full justify-between">
               <Text className="text-xl font-semibold text-zinc-50">{document.name}</Text>
-               {/* <ProcessBadge
+              {/* <ProcessBadge
                     category={
                         document.status ?? DocumentStatusEnum.WAITING
                     }

@@ -13,8 +13,9 @@ export default function FolderScreen() {
     folderId: string;
     parentFolderName: string;
   }>();
-  const { documents, docsToProcess, lastUploadedDocs, isLoading, refetch, trackDocumentView } =
-    useDocument(Number(folderId));
+  const { documents, docsToProcess, lastUploadedDocs, isLoading, refetch } = useDocument(
+    Number(folderId)
+  );
   return (
     <AppLayout showHeader onRefresh={() => refetch(Number(folderId))}>
       <Container
@@ -27,7 +28,7 @@ export default function FolderScreen() {
           docsToProcess={docsToProcess}
           lastUploadedDocs={lastUploadedDocs}
           refetch={refetch}
-          trackDocumentView={trackDocumentView}
+          isLoading={isLoading}
           folderName={parentFolderName}
           isDepth
         />

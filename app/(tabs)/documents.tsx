@@ -8,8 +8,7 @@ import { Headers } from '@/components/custom/Documents/Headers';
 import { DocumentOverview } from '@/components/custom/Documents/DocumentOverview';
 
 export default function DocumentScreen() {
-  const { documents, docsToProcess, lastUploadedDocs, isLoading, refetch, trackDocumentView } =
-    useDocument();
+  const { documents, docsToProcess, lastUploadedDocs, isLoading, refetch } = useDocument();
   return (
     <AppLayout showHeader onRefresh={() => refetch()}>
       <Container
@@ -31,7 +30,6 @@ export default function DocumentScreen() {
           lastUploadedDocs={lastUploadedDocs}
           refetch={refetch}
           isLoading={isLoading}
-          trackDocumentView={trackDocumentView}
         />
       </Container>
     </AppLayout>

@@ -31,23 +31,20 @@ export default function RootLayout() {
         <Stack.Screen
           name="scan-screen"
           options={{
-            presentation: 'modal',
-            animation: 'slide_from_bottom',
-            //gestureEnabled: true,
-            gestureDirection: 'vertical',
-            headerShown: false,
-          }}
-        />
-        {/* TODO <Stack.Screen
-          name="document"
-          options={{
-            presentation: 'modal',
             animation: 'slide_from_right',
-            //gestureEnabled: true,
+            gestureEnabled: true,
             gestureDirection: 'horizontal',
             headerShown: false,
           }}
-        /> */}
+        />
+        <Stack.Screen
+          name="document-screen"
+          options={{
+            presentation: 'modal',
+            gestureEnabled: true,
+            headerShown: false,
+          }}
+        />
       </Stack>
       <PortalHost />
       <Toast />

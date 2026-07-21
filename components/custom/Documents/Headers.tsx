@@ -1,13 +1,30 @@
-import { View } from "react-native";
+import { View } from 'react-native';
 import { GlassView } from 'expo-glass-effect';
-import { ChevronLeft, FolderPlus, UploadIcon } from "lucide-react-native";
-import { handleClose } from "@/utils/utils";
-import { Input } from "@/components/ui/input";
+import { ChevronLeft, FolderPlus, UploadIcon } from 'lucide-react-native';
+import { handleClose } from '@/utils/utils';
+import { Input } from '@/components/ui/input';
 import { styles } from '@/utils/styles';
-import { Container } from "@/components/custom/Container";
-import { CustomClassicButton } from "@/components/custom/CustomClassicButton";
+import { Container } from '@/components/custom/Container';
+import { CustomClassicButton } from '@/components/custom/CustomClassicButton';
+import { openImagePicker } from '@/hook/useImagePicker';
+import { useState } from 'react';
+import * as FileSystem from 'expo-file-system/legacy';
+import { router } from 'expo-router';
 
 export const Headers = () => {
+  const [version, setVersion] = useState(1);
+  const destUri = `${FileSystem.documentDirectory}/document`;
+
+  const pickImage = async () => {
+    const uri = await openImagePicker({ showCamera: false, showGalerie: true, showFiles: true });
+    if (!uri) return;
+    await FileSystem.copyAsync({ from: uri, to: destUri });
+    setVersion((v) => v + 1);
+    router.push({
+      pathname: '/import',
+      params: { uri: destUri },
+    });
+  };
   return (
     <View className="w-full flex-row items-center justify-start gap-2 px-4 pb-2">
       <CustomClassicButton
@@ -25,12 +42,7 @@ export const Headers = () => {
           placeholder="Rechercher..."
         />
       </Container>
-      <CustomClassicButton
-        onPress={handleClose}
-        icon={UploadIcon}
-        description=""
-        className="w-12"
-      />
+      <CustomClassicButton onPress={pickImage} icon={UploadIcon} description="" className="w-12" />
       <CustomClassicButton
         onPress={handleClose}
         icon={FolderPlus}

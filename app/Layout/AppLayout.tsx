@@ -36,9 +36,6 @@ export const AppLayout = ({ children, showHeader = false, onRefresh }: AppLayout
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh ?? onDefaultRefresh} />
           }>
-          {/* <Stack.Screen
-            options={{ ...SCREEN_OPTIONS, headerShown: showHeader, gestureEnabled: showHeader }}
-          /> */}
           <Container variant="vertical" className={'min-h-[100vh] items-center justify-center'}>
             {children}
           </Container>
