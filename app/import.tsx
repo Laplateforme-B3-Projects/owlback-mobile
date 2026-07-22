@@ -6,12 +6,16 @@ import { Container } from '@/components/custom/Container';
 import { Formik } from 'formik';
 import { useDocument } from '@/hook/useDocument';
 import { importDocumentSchema } from '@/app/Schemas/importDocumentSchema';
-import { ArrowRightCircle } from 'lucide-react-native';
 import { CustomClassicButton } from '@/components/custom/CustomClassicButton';
+import { getBaseFilename } from '@/utils/utils';
 
 export default function ImportScreen() {
-  const { uri } = useLocalSearchParams<{ uri: string }>();
-  const { importDocument } = useDocument();
+  const { uri, filename, mime } = useLocalSearchParams<{
+    uri: string;
+    filename: string;
+    mime: string;
+  }>();
+  const { importDocument, isLoading } = useDocument();
   return (
     <AppLayout showHeader>
       <Container
@@ -23,7 +27,15 @@ export default function ImportScreen() {
           resizeMode="contain"
         />
         <Formik
-          initialValues={{ image: uri, name: '', note: '' }}
+          initialValues={{
+            file: {
+              uri: uri,
+              type: mime,
+              name: filename,
+            },
+            name: getBaseFilename(filename),
+            note: '',
+          }}
           validationSchema={importDocumentSchema}
           onSubmit={importDocument}>
           {({
@@ -35,40 +47,47 @@ export default function ImportScreen() {
             isValid,
             touched,
             errors,
-          }) => (
-            <View className="flex flex-col items-center gap-3">
-              <Container variant="vertical" className="gap-3 px-16">
-                <Text>Nom du fichier</Text>
-                <TextInput
-                  onChangeText={handleChange('name')}
-                  onBlur={handleBlur('name')}
-                  value={values.name}
-                  className="h-10 rounded-md bg-[#516079] px-4 text-zinc-50"
-                />
-                {errors.name && touched.name && <Text className="text-red-500">{errors.name}</Text>}
-              </Container>
-              <Container variant="vertical" className="gap-3 px-16">
-                <Text>Note</Text>
-                <TextInput
-                  onChangeText={handleChange('note')}
-                  onBlur={handleBlur('note')}
-                  value={values.note}
-                  className="h-10 rounded-md bg-[#516079] px-4 text-zinc-50"
-                />
-                {errors.note && touched.note && <Text className="text-red-500">{errors.note}</Text>}
-              </Container>
-              <Container variant="vertical">
-                {/* {errorAuth && <Text className="text-red-500">{errorAuth}</Text>} */}
-                <CustomClassicButton
-                  onPress={() => handleSubmit()}
-                  description="Importer le document"
-                  className="self-start"
-                  //isLoading={isLoading}
-                  //isDisabled={(!isValid && !!errors) || isLoading}
-                />
-              </Container>
-            </View>
-          )}
+          }) => {
+            return (
+              <View className="flex flex-col items-center gap-6 pt-6">
+                <Container variant="vertical" className="w-screen gap-2 px-16">
+                  <Text>Nom du fichier</Text>
+                  <TextInput
+                    placeholder="Business meal"
+                    onChangeText={handleChange('name')}
+                    onBlur={handleBlur('name')}
+                    value={values.name}
+                    className="h-10 rounded-md bg-[#516079] px-4 text-zinc-50"
+                  />
+                  {errors.name && touched.name && (
+                    <Text className="text-red-500">{errors.name}</Text>
+                  )}
+                </Container>
+                <Container variant="vertical" className="w-screen gap-2 px-16">
+                  <Text>Note</Text>
+                  <TextInput
+                    placeholder="Repas dans le cadre d'un séminaire"
+                    onChangeText={handleChange('note')}
+                    onBlur={handleBlur('note')}
+                    value={values.note}
+                    className="h-10 rounded-md bg-[#516079] px-4 text-zinc-50"
+                  />
+                  {errors.note && touched.note && (
+                    <Text className="text-red-500">{errors.note}</Text>
+                  )}
+                </Container>
+                <Container variant="vertical">
+                  <CustomClassicButton
+                    onPress={handleSubmit}
+                    description="Importer le document"
+                    className="self-start"
+                    isLoading={isLoading}
+                    isDisabled={(!isValid && !!errors) || isLoading}
+                  />
+                </Container>
+              </View>
+            );
+          }}
         </Formik>
       </Container>
     </AppLayout>

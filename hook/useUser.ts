@@ -18,7 +18,6 @@ export const useUser = () => {
     try {
       const response = await axiosInstance.get<{ user: User }>('/user');
       if (response.data.user) {
-        console.log('het', response.data.user);
         updateUser(response.data.user);
         return true;
       }
@@ -46,7 +45,6 @@ export const useUser = () => {
         password_confirmation,
       });
       if (response.data.data) {
-        console.log('het', response.data.data);
         return true;
       }
     } catch (error: any) {

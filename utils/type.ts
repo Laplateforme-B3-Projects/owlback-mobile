@@ -88,3 +88,9 @@ export enum GenderEnum {
   FEMALE = 'FEMALE',
   MALE = 'MALE',
 }
+
+export interface PickedFile {
+  uri: string;
+  mimeType: string;
+  name: string;
+}

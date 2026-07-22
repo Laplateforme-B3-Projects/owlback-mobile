@@ -16,13 +16,17 @@ export const Headers = () => {
   const destUri = `${FileSystem.documentDirectory}/document`;
 
   const pickImage = async () => {
-    const uri = await openImagePicker({ showCamera: false, showGalerie: true, showFiles: true });
-    if (!uri) return;
-    await FileSystem.copyAsync({ from: uri, to: destUri });
+    const response = await openImagePicker({
+      showCamera: false,
+      showGalerie: true,
+      showFiles: true,
+    });
+    if (!response) return;
+    await FileSystem.copyAsync({ from: response.uri, to: destUri });
     setVersion((v) => v + 1);
     router.push({
       pathname: '/import',
-      params: { uri: destUri },
+      params: { uri: destUri, filename: response.name, mime: response.mimeType },
     });
   };
   return (

@@ -1,6 +1,8 @@
 import { showToast } from '@/app/profile';
 import axiosInstance from '@/utils/axios';
 import { DocumentAPIData, Folder, OwlbackFile } from '@/utils/type';
+import { ensureJpeg } from '@/utils/utils';
+import { router } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
 
 export const useDocument = (folderId?: number) => {
@@ -46,7 +48,6 @@ export const useDocument = (folderId?: number) => {
         showToast('error', 'Erreur', "Le document n'a pas pu être récupéré.");
         return;
       }
-      console.log('response', response.data);
       setDocument(response.data.document);
     } catch (error) {
       console.error('Error fetching document: ', error);
@@ -56,9 +57,46 @@ export const useDocument = (folderId?: number) => {
     }
   }, []);
 
-  const importDocument = useCallback(async () => {
-    return;
-  }, []);
+  const importDocument = useCallback(
+    async (values: {
+      file: { uri: string; type: string; name: string };
+      name: string;
+      note: string;
+    }) => {
+      const converted = await ensureJpeg(values.file.uri, values.file.type, values.name);
+      const formData = new FormData();
+      formData.append('file', {
+        uri: converted.uri,
+        type: converted.type,
+        name: converted.name,
+      });
+      formData.append('name', values.name);
+      formData.append('note', values.note);
+
+      setIsLoading(true);
+      try {
+        const response = await axiosInstance.post(`/document/import`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        if (response.status !== 200) {
+          console.error('Retrieving document appears to fail : ', response);
+          showToast('error', 'Erreur', "Le document n'a pas pu être récupéré.");
+          return;
+        }
+        showToast('success', 'Succès', response.data.message);
+        router.back();
+      } catch (error) {
+        console.error('Validation errors:', error?.response?.data.message);
+        console.error('Error fetching document: ', error);
+        showToast('error', 'Erreur', error?.response?.data.message);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    []
+  );
 
   useEffect(() => {
     handleDocuments(folderId);

@@ -89,7 +89,7 @@ export default function DocumentScreen() {
               <CustomCancelButton onPress={handleClose} icon={X} className="bg-app-secondary" />
             </View>
 
-            <Container className="mt-20 border border-zinc-50">
+            <Container className="mt-20 border border-zinc-400">
               <MediaResolver document={document} />
             </Container>
 

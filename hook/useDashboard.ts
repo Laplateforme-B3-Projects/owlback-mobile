@@ -14,7 +14,6 @@ export const useDashboard = () => {
     try {
       const response = await axiosInstance.get<DashboardData>(`/dashboard`);
       setDashboardData(response.data);
-      console.log(response.data, 'hey');
     } catch (error: any) {
       let message = 'Une erreur est survenue lors de la récupération des informations';
       if (axios.isAxiosError(error) && error.response) {
