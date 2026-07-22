@@ -43,9 +43,13 @@ export default function ProfileScreen() {
   const fp = new File(destUri);
 
   const pickAvatar = async () => {
-    const uri = await openImagePicker({ showCamera: true, showGalerie: true, showFiles: false });
-    if (!uri) return;
-    await FileSystem.copyAsync({ from: uri, to: destUri });
+    const response = await openImagePicker({
+      showCamera: true,
+      showGalerie: true,
+      showFiles: false,
+    });
+    if (!response?.uri) return;
+    await FileSystem.copyAsync({ from: response?.uri, to: destUri });
     setVersion((v) => v + 1);
     setImage(destUri);
   };

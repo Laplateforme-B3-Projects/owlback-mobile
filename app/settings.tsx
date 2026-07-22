@@ -1,13 +1,9 @@
-import { View, Pressable, Alert } from 'react-native';
+import { Alert, Image } from 'react-native';
 import { AppLayout } from '@/app/Layout/AppLayout';
 import { Container } from '@/components/custom/Container';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import useUserStore from '@/hook/store/useUserStore';
 import { CustomAvatar } from '@/components/custom/CustomAvatar';
-import * as FileSystem from 'expo-file-system/legacy';
-import { File } from 'expo-file-system';
 import { Text } from '@/components/ui/text';
-import { useState } from 'react';
 import {
   Bell,
   Contact,
@@ -17,13 +13,14 @@ import {
   Headset,
   Palette,
   Power,
-  X,
 } from 'lucide-react-native';
-import axios from 'axios';
 import { Link, router } from 'expo-router';
 import useToken from '@/hook/useToken';
 import { navigate } from 'expo-router/build/global-state/routing';
 import Toast from 'react-native-toast-message';
+import { GlassView } from 'expo-glass-effect';
+import { styles } from '@/utils/styles';
+import { PLAN } from '@/utils/asset';
 
 interface IconAndLabelProps {
   icon: string;
@@ -61,87 +58,101 @@ function IconAndLabel({ icon, label }: IconAndLabelProps) {
 }
 
 export default function SettingsScreen() {
-  const { getToken, deleteToken } = useToken();
-  const [image, setImage] = useState<string>('https://placehold.co/128/png');
+  const { deleteToken } = useToken();
   const user = useUserStore((state) => state.user);
-  const destUri = `${FileSystem.documentDirectory}/avatar`;
-  const fp = new File(destUri);
-  const avatarPath = fp.exists ? destUri : 'https://placehold.co/128/png';
   return (
     <AppLayout showHeader>
-      <View>
-        <SafeAreaView className="mt-10">
-          <Container variant="vertical" className="min-h-full min-w-full px-4 pt-10">
-            <Container variant="vertical" className="min-w-full items-center justify-center">
-              <CustomAvatar
-                username={user?.fullname}
-                uri={fp.exists ? destUri : image}
-                onPress={() => router.push('/profile')}
-              />
-              <Text className="text-xl font-medium">{user?.fullname}</Text>
-              <Text className="font-100 text-sm text-zinc-200">{user?.email}</Text>
-            </Container>
-            <Container className="mb-4 h-24 w-3/6 border border-red-600">
-              <Text>Abonnement</Text>
-            </Container>
-            <Container variant="linear" className="mb-4 h-24 justify-between border border-red-600">
-              <Text>Publicité</Text>
-              <X color="white" />
-            </Container>
-            <Container variant="vertical" className="min-h-24 rounded-xl bg-[#516079] p-4">
-              <IconAndLabel icon="Contact" label="Mes informations" />
-              <IconAndLabel icon="Database" label="Fichiers" />
-              <IconAndLabel icon="Palette" label="Apparence" />
-              <IconAndLabel icon="Eye" label="Accessibilité" />
-              <IconAndLabel icon="Bell" label="Notifications" />
-              <IconAndLabel icon="HatGlasses" label="Confidentialité" />
-              <IconAndLabel icon="Headset" label="Contacter le support" />
-              <Container variant="linear" className="justify-center">
-                <Container
-                  variant="linear"
-                  className="w-64 items-center justify-center rounded-full bg-app-secondary p-3">
-                  <Power color="white" />
-                  <Text
-                    className="ml-4 font-bold"
-                    onPress={() => {
-                      Alert.alert(
-                        'Êtes-vous sûr?',
-                        "Si vous voulez vous déconnecter, veuillez d'abord être en connaissance de votre mot de passe.",
-                        [
-                          {
-                            text: 'Annuler',
-                            style: 'cancel',
-                          },
-                          {
-                            text: 'Oui',
-                            style: 'default',
-                            onPress: async () => {
-                              try {
-                                deleteToken();
-                                navigate('/');
-                              } catch (error) {
-                                console.error(error);
-                                Toast.show({
-                                  type: 'error',
-                                  text1: 'Erreur',
-                                  text2: 'La deconnexion a échoué',
-                                  position: 'top',
-                                  visibilityTime: 3000,
-                                });
-                              }
-                            },
-                          },
-                        ]
-                      );
-                    }}>
-                    Déconnexion
-                  </Text>
-                </Container>
-              </Container>
+      <Container
+        variant="main-vertical"
+        className="h-auto items-start justify-center gap-3 px-4 py-20">
+        <Container variant="vertical" className="items-center justify-center self-center">
+          <CustomAvatar username={user?.fullname} onPress={() => router.push('/profile')} />
+          <Text className="text-xl font-medium">{user?.fullname}</Text>
+          <Text className="font-100 text-sm text-zinc-200">{user?.email}</Text>
+        </Container>
+
+        <SubscriptionPlan />
+
+        <Advertisement />
+
+        <Container variant="vertical" className="min-h-24 w-full rounded-xl bg-[#516079] p-4">
+          <IconAndLabel icon="Contact" label="Mes informations" />
+          <IconAndLabel icon="Database" label="Fichiers" />
+          <IconAndLabel icon="Palette" label="Apparence" />
+          <IconAndLabel icon="Eye" label="Accessibilité" />
+          <IconAndLabel icon="Bell" label="Notifications" />
+          <IconAndLabel icon="HatGlasses" label="Confidentialité" />
+          <IconAndLabel icon="Headset" label="Contacter le support" />
+          <Container variant="linear" className="justify-center">
+            <Container
+              variant="linear"
+              className="w-64 items-center justify-center rounded-full bg-app-secondary p-3">
+              <Power color="white" />
+              <Text
+                className="ml-4 font-bold"
+                onPress={() => {
+                  Alert.alert(
+                    'Êtes-vous sûr?',
+                    "Si vous voulez vous déconnecter, veuillez d'abord être en connaissance de votre mot de passe.",
+                    [
+                      {
+                        text: 'Annuler',
+                        style: 'cancel',
+                      },
+                      {
+                        text: 'Oui',
+                        style: 'default',
+                        onPress: async () => {
+                          try {
+                            deleteToken();
+                            navigate('/');
+                          } catch (error) {
+                            console.error(error);
+                            Toast.show({
+                              type: 'error',
+                              text1: 'Erreur',
+                              text2: 'La deconnexion a échoué',
+                              position: 'top',
+                              visibilityTime: 3000,
+                            });
+                          }
+                        },
+                      },
+                    ]
+                  );
+                }}>
+                Déconnexion
+              </Text>
             </Container>
           </Container>
-        </SafeAreaView>
-      </View>
+        </Container>
+      </Container>
     </AppLayout>
   );
 }
+
+const SubscriptionPlan = () => {
+  return (
+    <Container variant="vertical" className="h-36 w-52 items-start justify-between p-2">
+      <GlassView glassEffectStyle="clear" isInteractive style={styles.documentGlassView} />
+      <Image source={PLAN['plan1']} className="h-12 w-12" resizeMode="contain" />
+      <Container>
+        <Text className="text-xl font-semibold">Solo Plan</Text>
+        <Text>Abonnement</Text>
+      </Container>
+    </Container>
+  );
+};
+const Advertisement = () => {
+  return (
+    <Container
+      variant="vertical"
+      className="relative h-36 w-full items-start justify-center overflow-hidden rounded-sm bg-[#C5C6C6]">
+      <Container className="h-full max-w-64 p-3">
+        <Text className="text-3xl font-black">Votre temps mérite mieux.</Text>
+        <Text className="text-2xl">Monter en gamme</Text>
+      </Container>
+      <Image source={PLAN['addPlan']} className="absolute bottom-0 right-0" resizeMode="contain" />
+    </Container>
+  );
+};
