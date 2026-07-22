@@ -149,7 +149,7 @@ const Advertisement = () => {
       variant="vertical"
       className="relative h-36 w-full items-start justify-center overflow-hidden rounded-sm bg-[#C5C6C6]">
       <Container className="h-full max-w-64 p-3">
-        <Text className="text-3xl font-black">Votre temps mérite mieux.</Text>
+        <Text className="font-heading text-3xl text-zinc-50">Votre temps mérite mieux.</Text>
         <Text className="text-2xl">Monter en gamme</Text>
       </Container>
       <Image source={PLAN['addPlan']} className="absolute bottom-0 right-0" resizeMode="contain" />

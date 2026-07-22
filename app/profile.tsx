@@ -116,7 +116,7 @@ export default function ProfileScreen() {
             <Separator orientation="horizontal" className="my-4 bg-zinc-500" />
 
             <Container variant="vertical">
-              <Text className="text-xl font-bold text-zinc-300">Modifier le mot de passe</Text>
+              <Text className="font-heading text-2xl text-zinc-300">Modifier le mot de passe</Text>
               <Text className="font-md text-sm italic text-zinc-300">
                 Assurez-vous d'utiliser un mot de passe long et aléatoire pour sécuriser votre
                 compte.
@@ -178,7 +178,7 @@ export default function ProfileScreen() {
 
               <Separator orientation="horizontal" className="my-8 bg-zinc-500" />
 
-              <Text className="text-xl font-bold text-app-secondary">Supprimer le compte</Text>
+              <Text className="font-heading text-2xl text-app-secondary">Supprimer le compte</Text>
               <Text className="text-md font-light italic text-zinc-500">
                 Supprimer définitivement le compte
               </Text>

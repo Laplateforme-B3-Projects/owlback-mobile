@@ -21,7 +21,7 @@ export default function LoginScreen() {
       <Container variant="linear" className="items-center justify-center">
         <Image source={LOGO['light']} className="h-32 w-32" resizeMode="contain" />
       </Container>
-      <Text variant={'h1'} className="text-[56px] font-black text-app-secondary">
+      <Text variant={'h1'} className="font-heading text-[56px] text-app-secondary">
         Connexion
       </Text>
 

@@ -41,12 +41,12 @@ export default function DashboardScreen() {
 
         <Container variant="vertical">
           <AnimateSlideWrapper>
-            <Text className="text-center text-5xl font-black">
+            <Text className="font-heading text-center text-5xl">
               Heureux de vous revoir {user?.firstname},
             </Text>
           </AnimateSlideWrapper>
           <AnimateSlideWrapper duration={1000}>
-            <Text className="text-center text-2xl font-black text-[#C5C6C6]">
+            <Text className="font-heading text-center text-2xl text-[#C5C6C6]">
               Voici un aperçu de votre activité.
             </Text>
           </AnimateSlideWrapper>
@@ -61,7 +61,7 @@ export default function DashboardScreen() {
             <Container variant="linear" className="items-center">
               <Text className="text-6xl font-black text-white">{dashboardData?.totalAmount}€</Text>
             </Container>
-            <Text className="text-sm font-semibold text-white"> Voir mes dépenses </Text>
+            <Text className="text-lg text-white"> Voir mes dépenses </Text>
           </Container>
 
           <MiniGraph height={60} opacity={0.4} width={256} />
@@ -139,7 +139,9 @@ const AndroidPressable = ({ children, className = '', onPress }: CustomPressable
 const NotificationsView = () => {
   return (
     <Container variant="vertical" className="w-full items-start">
-      <Text className="mb-2 text-center text-3xl font-black text-app-secondary">Notifications</Text>
+      <Text className="font-heading mb-2 text-center text-3xl text-app-secondary">
+        Notifications
+      </Text>
       <NotFound
         description="Aucun document importé récemment."
         className="h-32 w-full rounded-2xl bg-app-primary"
@@ -160,7 +162,7 @@ const DashboardDocumentsView = ({
 }) => {
   return (
     <Container variant="vertical" className="w-full items-start">
-      <Text className="text-center text-3xl font-black text-[#C5C6C6]">Documents</Text>
+      <Text className="font-heading text-center text-3xl text-[#C5C6C6]">Documents</Text>
       <Container variant="vertical" className="w-full py-3">
         <Text className="text-lg">Derniers documents importés</Text>
         {lastUploadedDocs.length >= 1 ? (
@@ -208,7 +210,7 @@ const DocumentInformations = ({ dashboardData }: { dashboardData: DashboardData 
 const DashboardActivitiesView = () => {
   return (
     <Container variant="vertical" className="w-full items-start">
-      <Text className="text-center text-3xl font-black text-[#C5C6C6]">Activités</Text>
+      <Text className="font-heading text-center text-3xl text-[#C5C6C6]">Activités</Text>
       <Container variant="vertical" className="w-full py-3">
         <NotFound
           description="Aucune activité récente à afficher."
@@ -222,7 +224,7 @@ const DashboardActivitiesView = () => {
 const ChartFeeTypes = ({ categories }: { categories: Record<CategoryType, number>[] }) => {
   return (
     <Container variant="vertical" className="w-full items-start">
-      <Text className="text-center text-4xl font-black text-[#C5C6C6]">
+      <Text className="font-heading text-center text-3xl text-[#C5C6C6]">
         Répartition des types de frais
       </Text>
       <Container variant="vertical" className="w-full py-3">
