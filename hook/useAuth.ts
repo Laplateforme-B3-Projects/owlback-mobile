@@ -29,7 +29,7 @@ export const useAuth = () => {
     try {
       const response = await axiosInstance.post<UserAuth>(`/login`, values);
       if (response.data.token) {
-        console.log('login', response.data.token);
+        //console.log('login', response.data.token);
         await saveToken(response.data.token);
       }
       if (response.data.user) {

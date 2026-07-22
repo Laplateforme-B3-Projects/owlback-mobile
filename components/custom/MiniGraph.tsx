@@ -16,7 +16,7 @@ export const MiniGraph = ({
   opacity = 1,
 }: MiniGraphProps) => {
   return (
-    <View style={{ width, height, opacity, position: 'absolute', bottom: 0, left: 0, right: 0 }}>
+    <View style={{ width, height, opacity, position: 'absolute', bottom: 15, left: 0, right: 0 }}>
       <Svg height="100%" width="100%" viewBox="0 0 100 40" preserveAspectRatio="none">
         <Defs>
           <LinearGradient id="grad" x1="0" y1="0" x2="0" y2="1">

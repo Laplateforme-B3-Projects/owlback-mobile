@@ -5,7 +5,7 @@ import { AppLayout } from '@/app/Layout/AppLayout';
 import { Container } from '@/components/custom/Container';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CustomAvatar } from '@/components/custom/CustomAvatar';
-import { Pencil } from 'lucide-react-native';
+import { Building, Pencil } from 'lucide-react-native';
 import { Separator } from '@/components/ui/separator';
 import { Formik } from 'formik';
 import { CustomClassicButton } from '@/components/custom/CustomClassicButton';
@@ -22,7 +22,7 @@ const PLACEHOLDER_AVATAR = 'https://placehold.co/128/png';
 const inputStyle = 'bg-[#2f4558] py-2 px-1 rounded-md text-zinc-100 text-lg';
 const inputLabelStyle = 'font-semibold';
 
-const showToast = (type: 'success' | 'error', text1: string, text2: string) =>
+export const showToast = (type: 'success' | 'error', text1: string, text2: string) =>
   Toast.show({ type, text1, text2, position: 'top', visibilityTime: 3000 });
 
 const confirmAlert = (title: string, message: string, onConfirm: () => void) =>
@@ -43,7 +43,7 @@ export default function ProfileScreen() {
   const fp = new File(destUri);
 
   const pickAvatar = async () => {
-    const uri = await openImagePicker();
+    const uri = await openImagePicker({ showCamera: true, showGalerie: true, showFiles: false });
     if (!uri) return;
     await FileSystem.copyAsync({ from: uri, to: destUri });
     setVersion((v) => v + 1);
@@ -87,33 +87,33 @@ export default function ProfileScreen() {
         <SafeAreaView className="mt-24">
           <Container variant="vertical" className="min-h-full min-w-full px-4 pt-10">
             <Container variant="linear">
-              <Pressable onLongPress={() => fp.exists && deleteAvatar()} onPress={pickAvatar}>
-                <CustomAvatar username={user?.fullname} uri={`${image}#${version}`} />
-              </Pressable>
+              <CustomAvatar
+                username={user?.fullname}
+                uri={`${image}#${version}`}
+                onLongPress={() => fp.exists && deleteAvatar()}
+                onPress={pickAvatar}
+              />
               <Container variant="vertical" className="pl-2">
                 <Text className="text-xl font-medium">{user?.fullname}</Text>
                 <Container variant="linear" className="items-center gap-3">
-                  <Text className="font-100 text-sm text-zinc-200">{user?.email}</Text>
+                  <Text className="font-100 text-sm text-zinc-50">{user?.email}</Text>
                   <Pencil width={14} height={14} color="white" />
                 </Container>
-                <Text className="font-100 text-sm text-zinc-700">
-                  Utilisateur depuis {user?.password_created_at_human}
+                <Container variant="linear" className="items-center gap-1">
+                  <Building width={14} height={14} color="white" />
+                  <Text className="font-100 text-sm text-zinc-50">{user?.company_name}</Text>
+                </Container>
+                <Text className="font-100 text-sm italic text-zinc-300">
+                  Première connexion {user?.password_created_at_human ?? 'N/A'}
                 </Text>
               </Container>
             </Container>
 
-            <Container variant="vertical">
-              <Text>Documents stockés: TODO NOMBRE DOCUMENTS</Text>
-              <Text>Documents scannés: TODO NOMBRE DOCUMENTS</Text>
-              <Text>Dossier: TODO NOMBRE DOSSIERS</Text>
-              <Text>Entreprise: TODO NOM ENTREPRISE</Text>
-            </Container>
-
-            <Separator orientation="horizontal" className="my-2 bg-zinc-500" />
+            <Separator orientation="horizontal" className="my-4 bg-zinc-500" />
 
             <Container variant="vertical">
               <Text className="text-xl font-bold text-zinc-300">Modifier le mot de passe</Text>
-              <Text className="font-md text-sm text-zinc-300">
+              <Text className="font-md text-sm italic text-zinc-300">
                 Assurez-vous d'utiliser un mot de passe long et aléatoire pour sécuriser votre
                 compte.
               </Text>
@@ -172,16 +172,16 @@ export default function ProfileScreen() {
                 </Formik>
               </Container>
 
-              <Separator orientation="horizontal" className="my-2 bg-zinc-500" />
+              <Separator orientation="horizontal" className="my-8 bg-zinc-500" />
 
               <Text className="text-xl font-bold text-app-secondary">Supprimer le compte</Text>
-              <Text className="text-md font-light text-zinc-500">
+              <Text className="text-md font-light italic text-zinc-500">
                 Supprimer définitivement le compte
               </Text>
-              <Container className="vertical items-center">
+              <Container variant="linear" className="w-full items-center justify-center">
                 <CustomCancelButton
                   description="Supprimer"
-                  className="mt-4 w-52 bg-app-secondary font-semibold"
+                  className="mt-4 w-64 bg-app-secondary font-semibold"
                   onPress={() =>
                     confirmAlert(
                       'Supprimer le compte.',

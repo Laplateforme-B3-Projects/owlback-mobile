@@ -7,16 +7,17 @@ import React, { ReactNode, useCallback, useState } from 'react';
 interface AppLayoutProps {
   children: ReactNode;
   showHeader?: boolean;
+  onRefresh?: () => void;
 }
 const SCREEN_OPTIONS = {
   title: '',
   headerTransparent: true,
   headerRight: () => null,
 };
-export const AppLayout = ({ children, showHeader = false }: AppLayoutProps) => {
+export const AppLayout = ({ children, showHeader = false, onRefresh }: AppLayoutProps) => {
   const [refreshing, setRefreshing] = useState(false);
 
-  const onRefresh = useCallback(() => {
+  const onDefaultRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
@@ -32,10 +33,9 @@ export const AppLayout = ({ children, showHeader = false }: AppLayoutProps) => {
       <Container variant="main-vertical">
         <ScrollView
           showsVerticalScrollIndicator={false}
-          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-          {/* <Stack.Screen
-            options={{ ...SCREEN_OPTIONS, headerShown: showHeader, gestureEnabled: showHeader }}
-          /> */}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh ?? onDefaultRefresh} />
+          }>
           <Container variant="vertical" className={'min-h-[100vh] items-center justify-center'}>
             {children}
           </Container>

@@ -31,10 +31,17 @@ export default function RootLayout() {
         <Stack.Screen
           name="scan-screen"
           options={{
+            animation: 'slide_from_right',
+            gestureEnabled: true,
+            gestureDirection: 'horizontal',
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="document-screen"
+          options={{
             presentation: 'modal',
-            animation: 'slide_from_bottom',
-            //gestureEnabled: true,
-            gestureDirection: 'vertical',
+            gestureEnabled: true,
             headerShown: false,
           }}
         />

@@ -1,0 +1,63 @@
+export enum CategoryType {
+    ALL = 'ALL',
+    ACCOMMODATION = 'ACCOMMODATION',
+    ADMINISTRATIVE_FEES = 'ADMINISTRATIVE_FEES',
+    BANK_FEES = 'BANK_FEES',
+    EQUIPMENT = 'EQUIPMENT',
+    EVENT = 'EVENT',
+    FUEL = 'FUEL',
+    INTERNET = 'INTERNET',
+    IT = 'IT',
+    MEALS = 'MEALS',
+    MISCELLANEOUS = 'MISCELLANEOUS',
+    OFFICE_SUPPLIES = 'OFFICE_SUPPLIES',
+    PARKING = 'PARKING',
+    PAID_SERVICE = 'PAID_SERVICE',
+    PERSONAL_VEHICLE = 'PERSONAL_VEHICLE',
+    RENTAL_VEHICLE = 'RENTAL_VEHICLE',
+    TELEPHONY = 'TELEPHONY',
+    TOLL = 'TOLL',
+    TRAINING = 'TRAINING',
+    TRANSPORT = 'TRANSPORT',
+    UNKNOWN = 'UNKNOWN',
+}
+
+export const CategoryTypeMapping: Record<CategoryType, string> = {
+    ALL: 'Tous',
+    OFFICE_SUPPLIES: 'Bureautique',
+    FUEL: 'Carburant',
+    MISCELLANEOUS: 'Divers',
+    EQUIPMENT: 'Équipement',
+    EVENT: 'Événement',
+    TRAINING: 'Formation',
+    ADMINISTRATIVE_FEES: 'Frais administratifs',
+    BANK_FEES: 'Frais bancaires',
+    ACCOMMODATION: 'Hébergement',
+    INTERNET: 'Internet',
+    IT: 'Informatique',
+    PARKING: 'Parking',
+    TOLL: 'Péage',
+    PAID_SERVICE: 'Prestation payante',
+    MEALS: 'Repas',
+    TELEPHONY: 'Téléphonie',
+    PERSONAL_VEHICLE: 'Véhicule personnel',
+    RENTAL_VEHICLE: 'Véhicule de location',
+    TRANSPORT: 'Transport',
+    UNKNOWN: 'Inconnu',
+};
+
+export const DocumentStatusMapping: Record<DocumentStatusEnum, string> = {
+    WAITING: 'En attente',
+    PROCESSED: 'Traité',
+    WARNING: 'À vérifier',
+    FAILED: 'Erreur de traitement',
+    ARCHIVED: 'Archivé',
+};
+
+export enum DocumentStatusEnum {
+    ARCHIVED = 'ARCHIVED',
+    FAILED = 'FAILED',
+    PROCESSED = 'PROCESSED',
+    WAITING = 'WAITING',
+    WARNING = 'WARNING',
+}
