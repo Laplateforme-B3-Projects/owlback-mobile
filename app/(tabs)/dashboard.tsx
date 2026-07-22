@@ -23,14 +23,14 @@ import { LinesSkeleton } from '@/components/custom/Skeleton/LinesSkeleton';
 import { CircleSkeleton } from '@/components/custom/Skeleton/CircleSkeleton';
 import { DocumentSkeleton } from '@/components/custom/Skeleton/DocumentSkeleton';
 import { DocumentInformationsSkeleton } from '@/components/custom/Skeleton/DocumentInformationsSkeleton';
+import { navigate } from 'expo-router/build/global-state/routing';
 
 export default function DashboardScreen() {
   const user = useUserStore((state) => state.user);
   const { dashboardData, isLoading, refetch } = useDashboard();
   const {
     lastUploadedDocs,
-    isLoading: isDocumentLoading,
-    trackDocumentView,
+    isLoading: isDocumentLoading
   } = useDocument();
 
   return (
@@ -55,7 +55,10 @@ export default function DashboardScreen() {
           </AnimateSlideWrapper>
         </Container>
 
-        <CustomPressable className="mt-3 flex h-32 w-64 flex-col gap-0  pt-6">
+        <CustomPressable
+          className="mt-6 flex h-32 w-64 flex-col gap-0 overflow-hidden"
+          onPress={()=>{router.push("/expenses");}}
+        >
           <Container variant="vertical" className="items-center gap-0">
             <Container variant="linear" className="items-center">
               <Text className="text-6xl font-black text-white">{dashboardData?.totalAmount}€</Text>
@@ -83,7 +86,6 @@ export default function DashboardScreen() {
           <DashboardDocumentsView
             dashboardData={dashboardData}
             lastUploadedDocs={lastUploadedDocs}
-            trackDocumentView={trackDocumentView}
           />
         )}
 
@@ -154,12 +156,10 @@ const NotificationsView = () => {
 
 const DashboardDocumentsView = ({
   dashboardData,
-  lastUploadedDocs,
-  trackDocumentView,
+  lastUploadedDocs
 }: {
   dashboardData: DashboardData | null;
   lastUploadedDocs: OwlbackFile[];
-  trackDocumentView: (documentId: number) => void;
 }) => {
   return (
     <Container variant="vertical" className="w-full items-start">
@@ -172,7 +172,6 @@ const DashboardDocumentsView = ({
               <DocumentCard
                 key={`doc-${document.id}`}
                 document={document}
-                trackDocumentView={trackDocumentView}
               />
             ))}
           </Container>
