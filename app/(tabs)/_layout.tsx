@@ -8,7 +8,7 @@ import { Platform, View, StyleSheet, Animated, Easing, Pressable } from 'react-n
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { PlatformPressable } from '@react-navigation/elements';
 import { useLinkBuilder, useTheme } from '@react-navigation/native';
-import { GlassView } from 'expo-glass-effect';
+import GlassView from '@/components/ui/glassview';
 import { Container } from '@/components/custom/Container';
 import { styles } from '@/utils/styles';
 
@@ -75,7 +75,7 @@ const TabBar = ({ state, descriptors, navigation, insets }: BottomTabBarProps) =
         <Container
           variant="linear"
           className="absolute bottom-6 h-16 w-full items-center justify-between self-center overflow-hidden rounded-full">
-          <GlassView glassEffectStyle="clear" style={styles.glassView} isInteractive />
+          <GlassView glassEffectStyle="clear" style={styles.glassView} isInteractive fallbackClassName='border-0 border-t border-t-zinc-500/50 border-b border-b-zinc-900'/>
           {state.routes.map((route, index) => {
             const { options } = descriptors[route.key];
             const isFocused = state.index === index;

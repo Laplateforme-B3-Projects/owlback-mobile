@@ -5,7 +5,7 @@ import { AppLayout } from '@/app/Layout/AppLayout';
 import { CustomAvatar } from '@/components/custom/CustomAvatar';
 import { Container } from '@/components/custom/Container';
 import { Button } from '@/components/ui/button';
-import { GlassView } from 'expo-glass-effect';
+import GlassView from '@/components/ui/glassview';
 import { cn } from '@/lib/utils';
 import { ReactNode } from 'react';
 import { MiniGraph } from '@/components/custom/MiniGraph';
@@ -23,7 +23,6 @@ import { LinesSkeleton } from '@/components/custom/Skeleton/LinesSkeleton';
 import { CircleSkeleton } from '@/components/custom/Skeleton/CircleSkeleton';
 import { DocumentSkeleton } from '@/components/custom/Skeleton/DocumentSkeleton';
 import { DocumentInformationsSkeleton } from '@/components/custom/Skeleton/DocumentInformationsSkeleton';
-import { navigate } from 'expo-router/build/global-state/routing';
 
 export default function DashboardScreen() {
   const user = useUserStore((state) => state.user);
