@@ -7,7 +7,7 @@ import { CategoryBadge } from '@/components/custom/Badges/CategoryBadge';
 import { ProcessBadge } from '@/components/custom/Badges/ProcessBadge';
 import { Thumbnail } from '@/components/custom/Images/Thumbnail';
 import { Pressable, View } from 'react-native';
-import { GlassView } from 'expo-glass-effect';
+import GlassView from '@/components/ui/glassview';
 import { styles } from '@/utils/styles';
 import { router } from 'expo-router';
 

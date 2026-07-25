@@ -5,7 +5,7 @@ import { AppLayout } from '@/app/Layout/AppLayout';
 import { CustomAvatar } from '@/components/custom/CustomAvatar';
 import { Container } from '@/components/custom/Container';
 import { Button } from '@/components/ui/button';
-import { GlassView } from 'expo-glass-effect';
+import GlassView from '@/components/ui/glassview';
 import { cn } from '@/lib/utils';
 import { ReactNode, useMemo, useState } from 'react';
 import { MiniGraph } from '@/components/custom/MiniGraph';

@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { GlassView } from 'expo-glass-effect';
+import GlassView from '@/components/ui/glassview';
 import { ChevronLeft, FolderPlus, UploadIcon } from 'lucide-react-native';
 import { handleClose } from '@/utils/utils';
 import { Input } from '@/components/ui/input';

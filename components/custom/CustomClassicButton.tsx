@@ -4,7 +4,7 @@ import { AnimateElasticWrapper } from '@/components/animate/AnimateElasticWrappe
 import { LucideIcon } from 'lucide-react-native';
 import { Text, StyleSheet, Platform, ActivityIndicator } from 'react-native';
 import { BlurView } from 'expo-blur';
-import { GlassView } from 'expo-glass-effect';
+import GlassView from '../ui/glassview';
 import { cn } from '@/lib/utils';
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '@/utils/styles';
@@ -27,7 +27,7 @@ export const CustomClassicButton = ({
   isDisabled = false,
 }: CustomButtonProps) => {
   const os = Platform.OS;
-
+  
   return os === 'ios' ? (
     <IosButton
       onPress={onPress}
@@ -66,7 +66,7 @@ const IosButton = ({
         !description && 'w-12!',
         className
       )}>
-      <GlassView glassEffectStyle="clear" style={styles.glassView} isInteractive />
+      <GlassView glassEffectStyle="clear" style={styles.glassView} fallbackClassName="" isInteractive/>
       {description && <Text className="text-base text-white">{description}</Text>}
       {icon && !isLoading && <Icon as={icon} size={24} />}
       {isLoading && <ActivityIndicator color={'#f26619'} />}
