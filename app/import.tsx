@@ -49,7 +49,7 @@ export default function ImportScreen() {
             errors,
           }) => {
             return (
-              <View className="flex flex-col items-center gap-6 pt-6">
+              <Container className="flex flex-col items-center gap-6 pt-6">
                 <Container variant="vertical" className="w-screen gap-2 px-16">
                   <Text>Nom du fichier</Text>
                   <TextInput
@@ -85,7 +85,7 @@ export default function ImportScreen() {
                     isDisabled={(!isValid && !!errors) || isLoading}
                   />
                 </Container>
-              </View>
+              </Container>
             );
           }}
         </Formik>

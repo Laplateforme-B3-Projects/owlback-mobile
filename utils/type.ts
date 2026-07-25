@@ -32,6 +32,7 @@ export interface User {
 export interface DashboardData {
   documentData: DocumentData;
   totalAmount: number;
+  categoriesPie: Record<CategoryType, number>[];
 }
 
 export type Breadcrumb = {

@@ -30,7 +30,7 @@ export const DocumentOverview = ({
 }: DocumentOverviewProps) => {
   return (
     <Container variant="vertical" className="w-full gap-2">
-      <Text className="mt-8 text-4xl font-black text-app-secondary">{folderName}</Text>
+      <Text className="font-heading mt-8 text-3xl text-app-secondary">{folderName}</Text>
 
       {isLoading ? (
         <>
@@ -44,13 +44,13 @@ export const DocumentOverview = ({
       {/* //router.push(`/folder/${document.id}`) */}
       {!isDepth && (
         <>
-          <Text className="mt-8 text-4xl font-black text-[#C5C6C6]">Récemments ajoutés</Text>
+          <Text className="font-heading mt-8 text-3xl text-[#C5C6C6]">Récemments ajoutés</Text>
           {isLoading ? <DocumentSkeleton /> : <DocumentResolver documents={lastUploadedDocs} />}
         </>
       )}
       {!isDepth && (
         <>
-          <Text className="mt-8 text-4xl font-black text-[#C5C6C6]">Documents à traiter</Text>
+          <Text className="font-heading mt-8 text-3xl text-[#C5C6C6]">Documents à traiter</Text>
           {isLoading ? <DocumentSkeleton /> : <DocumentResolver documents={docsToProcess} />}
         </>
       )}

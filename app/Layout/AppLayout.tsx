@@ -1,7 +1,7 @@
 import { Container } from '@/components/custom/Container';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Stack } from 'expo-router';
-import { RefreshControl, ScrollView } from 'react-native';
+import { KeyboardAvoidingView, Platform, RefreshControl, ScrollView } from 'react-native';
 import React, { ReactNode, useCallback, useState } from 'react';
 
 interface AppLayoutProps {
@@ -30,17 +30,19 @@ export const AppLayout = ({ children, showHeader = false, onRefresh }: AppLayout
       locations={[0, 0.18, 0.4, 0.65, 1]}
       start={{ x: 0.2, y: 0 }}
       end={{ x: 0, y: 1 }}>
-      <Container variant="main-vertical">
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh ?? onDefaultRefresh} />
-          }>
-          <Container variant="vertical" className={'min-h-[100vh] items-center justify-center'}>
-            {children}
-          </Container>
-        </ScrollView>
-      </Container>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <Container variant="main-vertical">
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh ?? onDefaultRefresh} />
+            }>
+            <Container variant="vertical" className={'min-h-[100vh] items-center justify-center'}>
+              {children}
+            </Container>
+          </ScrollView>
+        </Container>
+      </KeyboardAvoidingView>
     </LinearGradient>
   );
 };

@@ -16,7 +16,7 @@ export default function DocumentScreen() {
         className="h-auto items-center justify-start gap-1 px-4 py-20">
         <Headers />
         <AnimateSlideWrapper>
-          <Text className="mt-8 text-center text-4xl font-black">Mes Notes de frais</Text>
+          <Text className="font-heading mt-8 text-center text-4xl">Mes Notes de frais</Text>
         </AnimateSlideWrapper>
 
         <Text className="text-center text-xl text-[#C5C6C6]">

@@ -22,7 +22,7 @@ export const useDashboard = () => {
           'Une erreur est survenue lors de la récupération des informations';
       }
       showToast('error', 'Erreur est survenue', message);
-      console.error(error);
+      console.error(message);
     } finally {
       setIsLoading(false);
     }
