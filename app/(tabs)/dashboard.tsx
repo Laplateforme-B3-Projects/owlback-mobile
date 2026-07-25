@@ -228,12 +228,12 @@ const ChartFeeTypes = ({ categories }: { categories: Record<CategoryType, number
         Répartition des types de frais
       </Text>
       <Container variant="vertical" className="w-full py-3">
-        {categories ? (
+        {categories.length > 1 ? (
           <PieChartData categories={categories} />
         ) : (
           <NotFound
             description="Aucun frais n'a été trouvé pour le moment."
-            className="h-56 w-full rounded-2xl bg-app-primary"
+            className="h-56 w-full rounded-2xl bg-app-secondary"
           />
         )}
       </Container>
