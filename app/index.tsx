@@ -66,7 +66,7 @@ export default function Screen() {
           </Container>
 
           <View className="flex w-full justify-center gap-2">
-            <Text variant={'h1'} className="text-6xl font-black text-app-secondary">
+            <Text variant={'h1'} className="font-heading text-6xl text-app-secondary">
               Owlback
             </Text>
 
