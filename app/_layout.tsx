@@ -16,6 +16,7 @@ import {
   Roboto_900Black,
 } from '@expo-google-fonts/roboto';
 import { Nunito_400Regular, Nunito_600SemiBold, Nunito_700Bold } from '@expo-google-fonts/nunito';
+SplashScreen.preventAutoHideAsync()
 
 export {
   // Catch any errors thrown by the Layout component.

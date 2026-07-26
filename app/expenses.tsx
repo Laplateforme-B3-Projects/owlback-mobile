@@ -13,19 +13,19 @@ import { ForkKnife } from 'lucide-react-native';
 export default function ExpensesScreen() {
   const { getToken, deleteToken } = useToken();
   const user = useUserStore((state) => state.user);
-  const data=[ {value:30},{value:32}, {value:43}, {value:60}, {value:70}, {value:50}, {value:45} ];
+  const data=[ {value:30},{value:32}, {value:43}, {value:60}, {value:70}, {value:50}, {value:45}, {value:65}, {value:50}, {value:45} ];
   const { width, height } = Dimensions.get("window");
 
   return (
     <AppLayout showHeader>
       <View>
         <SafeAreaView className="mt-10">
-          <Container variant="main-vertical" className="min-h-full min-w-full px-4 pt-10 items-center">
+          <Container variant="vertical" className="min-h-full pt-10 items-center">
             <Text className='text-4xl font-black'>Mes Dépenses</Text>
             <LineChart
               data={data}
               areaChart
-              width={width}
+              width={width+19}
               adjustToWidth
               height={height-400}
               hideYAxisText
@@ -34,6 +34,9 @@ export default function ExpensesScreen() {
               hideOrigin
               initialSpacing={0}
               endSpacing={0}
+              thickness={5}
+              dataPointsRadius={7}
+              
 
               color="#ff6d00"
               dataPointsColor="#ff6d00"
@@ -49,7 +52,7 @@ export default function ExpensesScreen() {
                 pointerColor: "#FF6D00",
                 radius: 4,
 
-                pointerLabelComponent: items => (
+                pointerLabelComponent: (items: any) => (
                     <Container
                       variant='linear'
                       className='bg-zinc-500 min-w-4! max-w-8! p-2'
@@ -61,7 +64,7 @@ export default function ExpensesScreen() {
                 ),
               }}
             />
-          <Svg width="100%" height={4}>
+          <Svg width={width} height={4}>
             <Line
               x1="0"
               y1="2"
@@ -72,7 +75,7 @@ export default function ExpensesScreen() {
               strokeDasharray="8 4"
             />
           </Svg>
-          <Container className='w-full border border-red-500'>
+          <Container className='w-full pt-5 px-4'>
             <Text className='text-zinc-500'>Dépense selectionnée:</Text>
             <Container variant='linear' className='justify-between'>
               <Container variant='linear'>

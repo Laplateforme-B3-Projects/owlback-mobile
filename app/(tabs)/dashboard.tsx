@@ -23,6 +23,7 @@ import { DocumentSkeleton } from '@/components/custom/Skeleton/DocumentSkeleton'
 import { DocumentInformationsSkeleton } from '@/components/custom/Skeleton/DocumentInformationsSkeleton';
 import { PieChart } from 'react-native-gifted-charts';
 import { CategoryColorMapping, CategoryType, CategoryTypeMapping } from '@/utils/enum';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function DashboardScreen() {
   const user = useUserStore((state) => state.user);
@@ -62,10 +63,18 @@ export default function DashboardScreen() {
             router.push('/expenses');
           }}>
           <Container variant="vertical" className="items-center gap-0 pt-6">
-            <Container variant="linear" className="items-center">
-              <Text className="text-6xl font-black text-white">{dashboardData?.totalAmount}€</Text>
-            </Container>
-            <Text className="text-lg text-white"> Voir mes dépenses </Text>
+            {
+              isLoading? (<>
+                <Skeleton className="h-5 w-15"/>
+              </>) : (
+                <>
+                  <Container variant="linear" className="items-center">
+                    <Text className="text-6xl font-black text-white">{dashboardData?.totalAmount}€</Text>
+                  </Container>
+                  <Text className="text-lg text-white"> Voir mes dépenses </Text>
+                </>)
+            }
+            
           </Container>
 
           <MiniGraph height={60} opacity={0.4} width={256} />
@@ -96,7 +105,7 @@ export default function DashboardScreen() {
         {isLoading ? (
           <CircleSkeleton />
         ) : (
-          <ChartFeeTypes categories={dashboardData?.categoriesPie ?? []} />
+          <ChartFeeTypes categories={dashboardData?.categoriesPie} />
         )}
       </Container>
     </AppLayout>
@@ -126,7 +135,7 @@ export const CustomPressable = ({ children, className = '', onPress }: CustomPre
 const IosPressable = ({ children, className = '', onPress }: CustomPressable) => {
   return (
     <Pressable onPress={onPress} className={cn(className)}>
-      <CustomGlassView />
+      <CustomGlassView isExpenseView/>
       {children}
     </Pressable>
   );
@@ -225,7 +234,7 @@ const DashboardActivitiesView = () => {
   );
 };
 
-const ChartFeeTypes = ({ categories }: { categories: Record<CategoryType, number> }) => {
+const ChartFeeTypes = ({ categories }: { categories: Record<CategoryType, number> | undefined }) => {
   return (
     <Container variant="vertical" className="w-full items-start">
       <Text className="font-heading text-center text-3xl text-[#C5C6C6]">
@@ -259,7 +268,7 @@ const PieChartData = ({ categories }: { categories: Record<CategoryType, number>
       // shiftY: -28,
     }));
   }
-  
+
   return (
     <Container variant="vertical" className="items-center">
       <PieChart
@@ -269,7 +278,7 @@ const PieChartData = ({ categories }: { categories: Record<CategoryType, number>
         showGradient
         innerRadius={80}
         innerCircleColor="#0D2E4A"
-        onPress={(item) =>
+        onPress={(item: any) =>
           setFocusedData(
             `${item.label}: ${item.value} ${item.value > 1 ? 'documents' : 'document'}`
           )
