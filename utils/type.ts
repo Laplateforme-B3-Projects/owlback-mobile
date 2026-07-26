@@ -35,6 +35,23 @@ export interface DashboardData {
   categoriesPie: Record<CategoryType, number>;
 }
 
+export interface Invoice {
+  id: number;
+  user_id: number;
+  document_id: number | null;
+  name: string;
+  amount: number;
+  tva_amount: number;
+  tva_percent: number;
+  category: CategoryType;
+  note: string | null;
+  metadata: Record<string, unknown> | null;
+  user?: User;
+  document?: Document;
+  created_at: string;
+  updated_at: string;
+}
+
 export type Breadcrumb = {
   path: string;
   parents: ParentsBreadcrumb[];
@@ -66,6 +83,7 @@ interface Document {
   created_at: string;
   updated_at: string;
   breadcrumb: Breadcrumb;
+  invoice?: Invoice
 }
 
 export interface OwlbackFile extends Document {
