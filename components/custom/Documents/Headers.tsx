@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import GlassView from '@/components/ui/glassview';
+import { CustomGlassView } from '@/components/custom/CustomGlassview';
 import { ChevronLeft, FolderPlus, UploadIcon } from 'lucide-react-native';
 import { handleClose } from '@/utils/utils';
 import { Input } from '@/components/ui/input';
@@ -39,7 +39,7 @@ export const Headers = () => {
       />
 
       <Container className="h-12 flex-1 overflow-hidden rounded-full">
-        <GlassView glassEffectStyle={'clear'} style={styles.glassView} isInteractive />
+        <CustomGlassView  />
         <Input
           className="h-full border-0 dark:bg-transparent"
           placeholderTextColor="white"

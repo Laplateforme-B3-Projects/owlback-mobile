@@ -9,7 +9,7 @@ const { getToken } = useToken();
 // Intercepteur, il injecte le token sur chaque requête
 axiosInstance.interceptors.request.use(async (config) => {
   const token = await getToken();
-  console.log(process.env.EXPO_PUBLIC_URL, token);
+  //console.log(process.env.EXPO_PUBLIC_URL, token);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

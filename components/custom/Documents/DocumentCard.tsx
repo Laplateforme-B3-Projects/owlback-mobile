@@ -7,7 +7,7 @@ import { CategoryBadge } from '@/components/custom/Badges/CategoryBadge';
 import { ProcessBadge } from '@/components/custom/Badges/ProcessBadge';
 import { Thumbnail } from '@/components/custom/Images/Thumbnail';
 import { Pressable, View } from 'react-native';
-import GlassView from '@/components/ui/glassview';
+import { CustomGlassView }from '@/components/custom/CustomGlassview';
 import { styles } from '@/utils/styles';
 import { router } from 'expo-router';
 
@@ -38,7 +38,7 @@ export const DocumentCard = ({ document }: DocumentCardProps) => {
     <View>
       <Pressable onPress={handleOpen}>
         <Container variant="vertical" className="h-24">
-          <GlassView glassEffectStyle="clear" style={styles.documentGlassView} isInteractive />
+          <CustomGlassView isDocumentGlassStyle/>
           {resolveColorStamp(document?.status)}
           <Container variant="linear" className="items-center justify-start gap-3 px-3 py-2">
             <Thumbnail document={document} />

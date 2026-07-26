@@ -9,27 +9,36 @@ import { handleClose } from '@/utils/utils';
 //import { CameraView, useCameraPermissions } from 'expo-camera';
 import * as Camera from "expo-camera";
 import { CustomClassicButton } from '@/components/custom/CustomClassicButton';
+import { router } from 'expo-router';
 
-const [ photosTaken, setPhotosTaken ] = useState(0);
-const cameraRef = useRef<Camera.CameraView>(null);
-
-const takePicture = async () => {
-  if (!cameraRef.current) return;
-
-  try {
-    const photo = await cameraRef.current.takePictureAsync({
-      quality: 1,
-      skipProcessing: false,
-    });
-    setPhotosTaken(photosTaken+1);
-  } catch (e) {
-    console.error(e);
-  }
-};
 
 export default function ScanScreen() {
 
   const [permission, requestPermission] = Camera.useCameraPermissions();
+  const [ photosTaken, setPhotosTaken ] = useState(0);
+  const cameraRef = useRef<Camera.CameraView>(null);
+
+  const takePicture = async () => {
+    if (!cameraRef.current) return;
+
+    try {
+      const photo = await cameraRef.current.takePictureAsync({
+        quality: 1,
+        skipProcessing: false,
+      });
+      setPhotosTaken(photosTaken+1);
+      router.push({
+        pathname: '/import',
+        params: { 
+          uri: photo.uri,
+          filename: photo.uri.split('/').pop(),
+          mime: 'image/jpeg'
+        },
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   if(!permission)
     return null;

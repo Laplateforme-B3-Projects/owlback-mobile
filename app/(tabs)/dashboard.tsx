@@ -5,13 +5,12 @@ import { AppLayout } from '@/app/Layout/AppLayout';
 import { CustomAvatar } from '@/components/custom/CustomAvatar';
 import { Container } from '@/components/custom/Container';
 import { Button } from '@/components/ui/button';
-import GlassView from '@/components/ui/glassview';
+import {CustomGlassView} from '@/components/custom/CustomGlassview';
 import { cn } from '@/lib/utils';
 import { ReactNode, useMemo, useState } from 'react';
 import { MiniGraph } from '@/components/custom/MiniGraph';
 import { Separator } from '@/components/ui/separator';
 import { AnimateSlideWrapper } from '@/components/animate/AnimateSlideWrapper';
-import { styles } from '@/utils/styles';
 import { DashboardData, OwlbackFile } from '@/utils/type';
 import { useDashboard } from '@/hook/useDashboard';
 import { NotFound } from '@/components/custom/NotFound';
@@ -27,18 +26,23 @@ import { CategoryColorMapping, CategoryType, CategoryTypeMapping } from '@/utils
 
 export default function DashboardScreen() {
   const user = useUserStore((state) => state.user);
-  const { dashboardData, isLoading, refetch } = useDashboard();
-  const { lastUploadedDocs, isLoading: isDocumentLoading } = useDocument();
+  const { dashboardData, isLoading, refetch: refetchDashboard } = useDashboard();
+  const { refetch: refetchDocument, lastUploadedDocs, isLoading: isDocumentLoading } = useDocument();
+
+  const handleRefetches = () => {
+    refetchDashboard();
+    refetchDocument();
+  }
 
   return (
-    <AppLayout onRefresh={refetch}>
+    <AppLayout onRefresh={handleRefetches}>
       <Container
         variant="main-vertical"
         className="h-auto items-center justify-start gap-5 px-4 py-20">
         <AnimateSlideWrapper>
           <CustomAvatar username={user?.fullname} onPress={() => router.push('/settings')} />
         </AnimateSlideWrapper>
-
+        
         <Container variant="vertical">
           <AnimateSlideWrapper>
             <Text className="font-heading text-center text-5xl">
@@ -122,7 +126,7 @@ export const CustomPressable = ({ children, className = '', onPress }: CustomPre
 const IosPressable = ({ children, className = '', onPress }: CustomPressable) => {
   return (
     <Pressable onPress={onPress} className={cn(className)}>
-      <GlassView glassEffectStyle="clear" style={styles.glassView} isInteractive />
+      <CustomGlassView />
       {children}
     </Pressable>
   );
@@ -221,14 +225,14 @@ const DashboardActivitiesView = () => {
   );
 };
 
-const ChartFeeTypes = ({ categories }: { categories: Record<CategoryType, number>[] }) => {
+const ChartFeeTypes = ({ categories }: { categories: Record<CategoryType, number> }) => {
   return (
     <Container variant="vertical" className="w-full items-start">
       <Text className="font-heading text-center text-3xl text-[#C5C6C6]">
         Répartition des types de frais
       </Text>
       <Container variant="vertical" className="w-full py-3">
-        {categories.length > 1 ? (
+        {categories ? (
           <PieChartData categories={categories} />
         ) : (
           <NotFound
@@ -241,11 +245,11 @@ const ChartFeeTypes = ({ categories }: { categories: Record<CategoryType, number
   );
 };
 
-const PieChartData = ({ categories }: { categories: Record<CategoryType, number>[] }) => {
+const PieChartData = ({ categories }: { categories: Record<CategoryType, number> }) => {
   const pieData = useMemo(() => formatCategoriesToChartData(categories), [categories]);
   const [focusedData, setFocusedData] = useState<string>('');
 
-  function formatCategoriesToChartData(categories: Record<CategoryType, number>[]) {
+  function formatCategoriesToChartData(categories: Record<CategoryType, number>) {
     return Object.entries(categories).map(([key, value]) => ({
       value: value,
       color: CategoryColorMapping[key as CategoryType],
@@ -255,7 +259,7 @@ const PieChartData = ({ categories }: { categories: Record<CategoryType, number>
       // shiftY: -28,
     }));
   }
-
+  
   return (
     <Container variant="vertical" className="items-center">
       <PieChart

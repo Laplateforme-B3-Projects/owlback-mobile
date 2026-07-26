@@ -12,7 +12,6 @@ export const openImagePicker = async ({
   const permissionMedia = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
   if (!permissionCamera.granted || !permissionMedia.granted) {
-    console.log('Permissions refusées');
     return null;
   }
 

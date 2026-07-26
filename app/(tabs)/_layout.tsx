@@ -1,16 +1,14 @@
 import React, { ReactNode } from 'react';
 import { Tabs, router } from 'expo-router';
 import { Home, FolderClosed, ScanLine } from 'lucide-react-native';
-import { useColorScheme } from 'nativewind';
-import { NAV_THEME } from '@/lib/theme';
 import { Text } from '@/components/ui/text';
 import { Platform, View, StyleSheet, Animated, Easing, Pressable } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { PlatformPressable } from '@react-navigation/elements';
 import { useLinkBuilder, useTheme } from '@react-navigation/native';
-import GlassView from '@/components/ui/glassview';
+import {CustomGlassView} from '@/components/custom/CustomGlassview';
 import { Container } from '@/components/custom/Container';
-import { styles } from '@/utils/styles';
+
 
 export default function TabLayout() {
   return (
@@ -68,14 +66,15 @@ const TabBar = ({ state, descriptors, navigation, insets }: BottomTabBarProps) =
     scan: (props: any) => <ScanLine {...props} />,
     documents: (props: any) => <FolderClosed {...props} />,
   };
-
+  
   if (os === 'ios') {
     return (
       <Container className="relative w-full px-4">
         <Container
           variant="linear"
           className="absolute bottom-6 h-16 w-full items-center justify-between self-center overflow-hidden rounded-full">
-          <GlassView glassEffectStyle="clear" style={styles.glassView} isInteractive fallbackClassName='border-0 border-t border-t-zinc-500/50 border-b border-b-zinc-900'/>
+         <CustomGlassView  />
+          
           {state.routes.map((route, index) => {
             const { options } = descriptors[route.key];
             const isFocused = state.index === index;

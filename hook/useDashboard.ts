@@ -13,7 +13,7 @@ export const useDashboard = () => {
     setIsLoading(true);
     try {
       const response = await axiosInstance.get<DashboardData>(`/dashboard`);
-      setDashboardData(response.data);
+      setDashboardData({...response.data, categoriesPie: response.data.categoriesPie});
     } catch (error: any) {
       let message = 'Une erreur est survenue lors de la récupération des informations';
       if (axios.isAxiosError(error) && error.response) {
@@ -26,11 +26,11 @@ export const useDashboard = () => {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [dashboardData]);
 
   useEffect(() => {
     getDashboardData();
-  }, [getDashboardData]);
+  }, []);
 
   return { dashboardData, isLoading, refetch: getDashboardData };
 };
