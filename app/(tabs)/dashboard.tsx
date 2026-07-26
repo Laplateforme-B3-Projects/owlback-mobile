@@ -69,7 +69,7 @@ export default function DashboardScreen() {
               </>) : (
                 <>
                   <Container variant="linear" className="items-center">
-                    <Text className="text-6xl font-black text-white">{dashboardData?.totalAmount}€</Text>
+                    <Text className="text-6xl font-black text-white">{Math.round((dashboardData?.totalAmount ?? 0) * 1000) / 1000}€</Text>
                   </Container>
                   <Text className="text-lg text-white"> Voir mes dépenses </Text>
                 </>)

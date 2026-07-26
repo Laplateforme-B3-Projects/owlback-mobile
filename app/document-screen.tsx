@@ -106,7 +106,7 @@ export default function DocumentScreen() {
             <MediaContent
               icon={<Sparkles color={'#F26619'} />}
               title="Contenu IA"
-              content={document.content}
+              content={document.invoice?.metadata['context']}
             />
 
             <MediaContent
@@ -156,7 +156,7 @@ interface MediaContentProps {
   title?: string;
 }
 
-const MediaContent = ({ icon, content, title }: MediaContentProps) => {
+const MediaContent = ({ icon, content = "N/A", title }: MediaContentProps) => {
   return (
     <Accordion type="single" collapsible>
       <AccordionItem value="item-1">

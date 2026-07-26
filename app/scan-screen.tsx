@@ -75,8 +75,12 @@ export default function ScanScreen() {
           description="Prendre la photo"
           onPress={takePicture}
         />
-        <Text className='text-white'>
+        {/* <Text className='text-white'>
           Photos prises: {photosTaken}
+        </Text> */}
+
+        <Text className='text-zinc-400 text-center italic'>
+          Merci de prendre une photo nette et bien cadrée du document, en évitant les reflets et le flou. Assurez vous le texte soit visible.
         </Text>
       </Container>
     </View>
