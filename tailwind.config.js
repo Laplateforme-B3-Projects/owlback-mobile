@@ -7,6 +7,13 @@ module.exports = {
   presets: [require('nativewind/preset')],
   theme: {
     extend: {
+      fontFamily: {
+        heading: ['Roboto_900Black'],
+        'heading-medium': ['Roboto_500Medium'],
+        sans: ['Nunito_400Regular'], // devient la police par défaut
+        'sans-semibold': ['Nunito_600SemiBold'],
+        'sans-bold': ['Nunito_700Bold'],
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

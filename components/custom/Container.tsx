@@ -20,16 +20,12 @@ export const Container = ({ children, variant = 'default', className = '' }: Con
   switch (variant) {
     case 'main-linear':
       return (
-        <View className={`flex h-full w-full flex-row px-8 py-32 sm:px-32 ${className}`}>
+        <View className={`flex h-full w-screen flex-row px-8 py-32 sm:px-32 ${className}`}>
           {children}
         </View>
       );
     case 'main-vertical':
-      return (
-        <View className={`flex h-full w-full flex-col px-8 py-32 sm:px-32 ${className}`}>
-          {children}
-        </View>
-      );
+      return <View className={`flex h-full w-screen flex-col py-2 ${className}`}>{children}</View>;
     case 'linear':
       return <View className={`flex flex-row ${className}`}>{children}</View>;
     case 'vertical':
